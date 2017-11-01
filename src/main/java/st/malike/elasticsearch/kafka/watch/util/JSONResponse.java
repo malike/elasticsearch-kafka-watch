@@ -2,7 +2,6 @@ package st.malike.elasticsearch.kafka.watch.util;
 
 import org.elasticsearch.common.xcontent.ToXContent;
 import org.elasticsearch.common.xcontent.XContentBuilder;
-
 import java.io.IOException;
 
 /**

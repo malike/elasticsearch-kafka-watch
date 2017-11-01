@@ -1,4 +1,4 @@
-package st.malike.elasticsearch.oauth2.plugin;
+package st.malike.elasticsearch.kafka.watch;
 
 import com.google.gson.Gson;
 import org.codelibs.elasticsearch.runner.ElasticsearchClusterRunner;
