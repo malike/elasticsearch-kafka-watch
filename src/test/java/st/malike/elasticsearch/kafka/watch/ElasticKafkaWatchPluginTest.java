@@ -27,7 +27,7 @@ public class ElasticKafkaWatchPluginTest {
 
         private static Node node;
         private static ElasticsearchClusterRunner runner;
-        private static final String CLUSTER_NAME = "RECOMMENDATION_CLUSTER";
+        private static final String CLUSTER_NAME = "DUMMY_CLUSTER";
         private static final String CLUSTER_HOST_ADDRESS = "localhost:9201-9210";
         private static final String INDEX = "dummydata";
         private static final int DOC_SIZE = 1000;
@@ -46,7 +46,7 @@ public class ElasticKafkaWatchPluginTest {
                     settingsBuilder.putArray("discovery.zen.ping.unicast.hosts", CLUSTER_HOST_ADDRESS);
                 }
             }).build(ElasticsearchClusterRunner.newConfigs().clusterName(CLUSTER_NAME).numOfNode(1)
-                    .pluginTypes("ElasticOAuth2Plugin"));
+                    .pluginTypes("ElasticKafkaWatchPlugin"));
 
             runner.ensureYellow();
 
