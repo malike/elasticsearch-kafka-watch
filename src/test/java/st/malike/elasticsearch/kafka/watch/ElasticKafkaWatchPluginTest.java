@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.jayway.restassured.RestAssured.given;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author malike_st
@@ -25,69 +25,84 @@ import static org.junit.Assert.*;
 public class ElasticKafkaWatchPluginTest {
 
 
-        private static Node node;
-        private static ElasticsearchClusterRunner runner;
-        private static final String CLUSTER_NAME = "DUMMY_CLUSTER";
-        private static final String CLUSTER_HOST_ADDRESS = "localhost:9201-9210";
-        private static final String INDEX = "dummydata";
-        private static final int DOC_SIZE = 1000;
-        private Map param;
+    private static final String CLUSTER_NAME = "DUMMY_CLUSTER";
+    private static final String CLUSTER_HOST_ADDRESS = "localhost:9201-9210";
+    private static Node node;
+    private static ElasticsearchClusterRunner runner;
+    private Map param;
 
-        @BeforeClass
-        public static void setUp() throws IOException {
+    @BeforeClass
+    public static void setUp() throws IOException {
 
-            runner = new ElasticsearchClusterRunner();
+        runner = new ElasticsearchClusterRunner();
 
-            runner.onBuild(new ElasticsearchClusterRunner.Builder() {
-                @Override
-                public void build(final int number, final Settings.Builder settingsBuilder) {
-                    settingsBuilder.put("http.cors.allow-origin", "*");
-                    settingsBuilder.put("http.cors.enabled", true);
-                    settingsBuilder.putArray("discovery.zen.ping.unicast.hosts", CLUSTER_HOST_ADDRESS);
-                }
-            }).build(ElasticsearchClusterRunner.newConfigs().clusterName(CLUSTER_NAME).numOfNode(1)
-                    .pluginTypes("ElasticKafkaWatchPlugin"));
-
-            runner.ensureYellow();
-
-            //setupup dummy data
-            final String type = "dummydata";
-
-            // create an index
-            runner.createIndex(INDEX, (Settings) null);
-
-            // create documents
-            for (int i = 1; i <= DOC_SIZE; i++) {
-                runner.insert(INDEX, type, String.valueOf(i),
-                        "{"
-                                + "\"name\":\"Product " + i + "\","
-                                + "\"id\":" + i
-                                + "}");
+        runner.onBuild(new ElasticsearchClusterRunner.Builder() {
+            @Override
+            public void build(final int number, final Settings.Builder settingsBuilder) {
+                settingsBuilder.put("http.cors.allow-origin", "*");
+                settingsBuilder.put("http.cors.enabled", true);
+                settingsBuilder.putArray("discovery.zen.ping.unicast.hosts", CLUSTER_HOST_ADDRESS);
             }
-            runner.refresh();
+        }).build(ElasticsearchClusterRunner.newConfigs().clusterName(CLUSTER_NAME).numOfNode(1)
+                .pluginTypes("st.malike.elasticsearch.kafka.watch.ElasticKafkaWatchPlugin"));
 
-            SearchResponse searchResponse = runner.search(INDEX, type, null, null, 0, 10);
-            assertEquals(DOC_SIZE, searchResponse.getHits().getTotalHits());
+        runner.ensureYellow();
 
-            node = runner.node();
-        }
+        runner.refresh();
 
-        @AfterClass
-        public static void tearDown() throws IOException {
-            runner.close();
-            runner.clean();
-        }
-
-        @Before
-        public void setUpTest() {
-
-            param = new HashMap();
-        }
-
-        @Test
-        public void searchWithNoAuthorization() {
-            Assert.assertNotEquals("awesome","AWESOME");
-        }
-
-
+        node = runner.node();
     }
+
+    @AfterClass
+    public static void tearDown() throws IOException {
+        runner.close();
+        runner.clean();
+    }
+
+    @Before
+    public void setUpTest() {
+
+        param = new HashMap();
+    }
+
+    @Test
+    public void addNewWatcher() {
+        given()
+                .log().all().contentType("application/json")
+                .body(new Gson().toJson(param))
+                .when()
+                .post("http://localhost:9201/_newkafkawatch")
+                .then()
+                .statusCode(200)
+                .body("status", Matchers.is(true))
+                .body("message", Matchers.is(Enums.JSONResponseMessage.SUCCESS.toString()));
+    }
+
+    @Test
+    public void removeWatcher() {
+        given()
+                .log().all().contentType("application/json")
+                .body(new Gson().toJson(param))
+                .when()
+                .post("http://localhost:9201/_removekafkawatch")
+                .then()
+                .statusCode(200)
+                .body("status", Matchers.is(true))
+                .body("message", Matchers.is(Enums.JSONResponseMessage.SUCCESS.toString()));
+    }
+
+    @Test
+    public void viewWatchers() {
+        given()
+                .log().all().contentType("application/json")
+                .body(new Gson().toJson(param))
+                .when()
+                .post("http://localhost:9201/_listkafkawatch")
+                .then()
+                .statusCode(200)
+                .body("status", Matchers.is(true))
+                .body("message", Matchers.is(Enums.JSONResponseMessage.SUCCESS.toString()));
+    }
+
+
+}
