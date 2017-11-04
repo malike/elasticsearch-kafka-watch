@@ -1,3 +1,3 @@
 ## elastic-kafka-watch
 
-A custom watcher plugin for ElasticSearch that feeds Apache Kafka. 
+A custom watcher for ElasticSearch. Works with Apache Kafka. 
