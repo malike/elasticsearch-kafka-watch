@@ -27,7 +27,9 @@ public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
                                              SettingsFilter settingsFilter,
                                              IndexNameExpressionResolver indexNameExpressionResolver,
                                              Supplier<DiscoveryNodes> nodesInCluster) {
-        return null;
+        return Arrays.asList(new AddWatcherRestAction(settings, restController),
+                new RemoveWatcherRestAction(settings, restController),
+                new ViewWatchersRestAction(settings, restController));
     }
 
 
