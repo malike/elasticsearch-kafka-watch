@@ -13,7 +13,7 @@ import java.io.IOException;
 import static org.elasticsearch.rest.RestRequest.Method.POST;
 
 /**
- * @author malike_st.
+ * @author malike_st
  */
 public class ViewWatchersRestAction extends BaseRestHandler {
 
