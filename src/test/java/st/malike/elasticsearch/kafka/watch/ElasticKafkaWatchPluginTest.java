@@ -49,6 +49,13 @@ public class ElasticKafkaWatchPluginTest {
 
         runner.ensureYellow();
 
+        //setupup dummy data
+        final String type = "reporttype";
+
+        // create an index
+        runner.createIndex("test", (Settings) null);
+
+
         runner.refresh();
 
         node = runner.node();
@@ -64,6 +71,21 @@ public class ElasticKafkaWatchPluginTest {
     public void setUpTest() {
 
         param = new HashMap();
+    }
+
+    @Test
+    public void addDummyData() {
+        given()
+                .log().all().contentType("application/json")
+                .body("{" +
+                        "    \"user\" : \"kimchy\",\n" +
+                        "    \"post_date\" : \"2009-11-15T14:12:12\",\n" +
+                        "    \"message\" : \"trying out Elasticsearch\"\n" +
+                        "}")
+                .when()
+                .post("http://localhost:9201/test/reporttype/")
+                .then()
+                .statusCode(201);
     }
 
     @Test
