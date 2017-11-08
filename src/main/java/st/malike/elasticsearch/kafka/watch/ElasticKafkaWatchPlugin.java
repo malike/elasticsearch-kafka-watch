@@ -6,6 +6,7 @@ import org.elasticsearch.common.settings.ClusterSettings;
 import org.elasticsearch.common.settings.IndexScopedSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.settings.SettingsFilter;
+import org.elasticsearch.index.IndexModule;
 import org.elasticsearch.plugins.ActionPlugin;
 import org.elasticsearch.plugins.Plugin;
 import org.elasticsearch.rest.RestController;
@@ -19,6 +20,10 @@ import java.util.function.Supplier;
  * @author malike_st
  */
 public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
+
+    private static final String KAFKA_WATCH_BINDERS = "kafka.watch.binders";
+    private static final String KAFKA_WATCH_TOPIC = "kafka.watch.topic";
+    private static final String KAFKA_WATCH_DISABLE = "kafka.watch.disable";
 
     @Override
     public List<RestHandler> getRestHandlers(Settings settings,

@@ -2,11 +2,13 @@ package st.malike.elasticsearch.kafka.watch;
 
 import com.google.gson.Gson;
 import org.codelibs.elasticsearch.runner.ElasticsearchClusterRunner;
-import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.node.Node;
 import org.hamcrest.Matchers;
-import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import st.malike.elasticsearch.kafka.watch.util.Enums;
@@ -16,7 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.jayway.restassured.RestAssured.given;
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author malike_st
