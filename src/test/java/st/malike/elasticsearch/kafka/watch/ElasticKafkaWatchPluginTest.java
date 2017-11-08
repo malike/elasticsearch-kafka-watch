@@ -26,6 +26,8 @@ import static com.jayway.restassured.RestAssured.given;
 public class ElasticKafkaWatchPluginTest {
 
 
+    private static final String INDEX_NAME = "KAFKA_WATCH";
+    private static final String INDEX_TYPE = "KAFKA_TOPIC";
     private static final String CLUSTER_NAME = "DUMMY_CLUSTER";
     private static final String CLUSTER_HOST_ADDRESS = "localhost:9201-9210";
     private static Node node;
@@ -50,10 +52,9 @@ public class ElasticKafkaWatchPluginTest {
         runner.ensureYellow();
 
         //setupup dummy data
-        final String type = "reporttype";
 
         // create an index
-        runner.createIndex("test", (Settings) null);
+        runner.createIndex(INDEX_NAME, (Settings) null);
 
 
         runner.refresh();
@@ -83,7 +84,7 @@ public class ElasticKafkaWatchPluginTest {
                         "    \"message\" : \"trying out Elasticsearch\"\n" +
                         "}")
                 .when()
-                .post("http://localhost:9201/test/reporttype/")
+                .post("http://localhost:9201/"+INDEX_NAME+"/"+INDEX_TYPE+"/")
                 .then()
                 .statusCode(201);
     }
