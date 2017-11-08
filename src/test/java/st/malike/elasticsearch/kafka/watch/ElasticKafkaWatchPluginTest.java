@@ -26,8 +26,8 @@ import static com.jayway.restassured.RestAssured.given;
 public class ElasticKafkaWatchPluginTest {
 
 
-    private static final String INDEX_NAME = "KAFKA_WATCH";
-    private static final String INDEX_TYPE = "KAFKA_TOPIC";
+    private static final String INDEX_NAME = "kafka_watch";
+    private static final String INDEX_TYPE = "kafka_topic";
     private static final String CLUSTER_NAME = "DUMMY_CLUSTER";
     private static final String CLUSTER_HOST_ADDRESS = "localhost:9201-9210";
     private static Node node;
