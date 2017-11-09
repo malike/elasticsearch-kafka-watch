@@ -1,4 +1,4 @@
-package st.malike.elasticsearch.kafka.watch;
+package st.malike.elasticsearch.kafka.watch.listener;
 
 import org.elasticsearch.index.Index;
 import org.elasticsearch.index.IndexService;

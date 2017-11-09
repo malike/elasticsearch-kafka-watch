@@ -11,6 +11,8 @@ import org.elasticsearch.plugins.ActionPlugin;
 import org.elasticsearch.plugins.Plugin;
 import org.elasticsearch.rest.RestController;
 import org.elasticsearch.rest.RestHandler;
+import st.malike.elasticsearch.kafka.watch.listener.DocumentWatcherListener;
+import st.malike.elasticsearch.kafka.watch.listener.IndexWatcherListener;
 
 import java.util.Arrays;
 import java.util.List;

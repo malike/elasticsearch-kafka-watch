@@ -1,4 +1,4 @@
-package st.malike.elasticsearch.kafka.watch;
+package st.malike.elasticsearch.kafka.watch.listener;
 
 import com.google.gson.Gson;
 import org.elasticsearch.index.engine.Engine;
