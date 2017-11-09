@@ -10,5 +10,10 @@ public class Enums {
         ERROR
     }
 
+    public enum TriggerType{
+        TIME,
+        INDEX_OPS
+    }
+
 
 }

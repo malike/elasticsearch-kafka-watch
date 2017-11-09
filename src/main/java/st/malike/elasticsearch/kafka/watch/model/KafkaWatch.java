@@ -1,5 +1,7 @@
 package st.malike.elasticsearch.kafka.watch.model;
 
+import st.malike.elasticsearch.kafka.watch.util.Enums;
+
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +17,8 @@ public class KafkaWatch {
     private String description;
     private List<String> recipient;
     private List<String> channel;
+    private Enums.TriggerType triggerType;
+    private String indexOpsQuery;
     private Date dateCreated;
 
 
@@ -72,6 +76,22 @@ public class KafkaWatch {
 
     public void setChannel(List<String> channel) {
         this.channel = channel;
+    }
+
+    public Enums.TriggerType getTriggerType() {
+        return triggerType;
+    }
+
+    public void setTriggerType(Enums.TriggerType triggerType) {
+        this.triggerType = triggerType;
+    }
+
+    public String getIndexOpsQuery() {
+        return indexOpsQuery;
+    }
+
+    public void setIndexOpsQuery(String indexOpsQuery) {
+        this.indexOpsQuery = indexOpsQuery;
     }
 
     public Date getDateCreated() {
