@@ -23,6 +23,7 @@ import java.util.function.Supplier;
  */
 public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
 
+    private static final String KAFKA_WATCH_ELASTICSEARCH_INDEX = "kafka.watch.elasticsearch.index";
     private static final String KAFKA_WATCH_BINDERS = "kafka.watch.binders";
     private static final String KAFKA_WATCH_TOPIC = "kafka.watch.topic";
     private static final String KAFKA_WATCH_DISABLE = "kafka.watch.disable";

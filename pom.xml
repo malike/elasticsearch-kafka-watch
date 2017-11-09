@@ -8,7 +8,7 @@
     <artifactId>st.malike.elasticsearch.kafka.watch</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>Plugin: ElasticSearch Kafka Watch</name>
-    <description>Push data into Apache Kafka if provided queires get a hit</description>
+    <description>Push data into Apache Kafka if provided there's a hit</description>
 
 
     <properties>

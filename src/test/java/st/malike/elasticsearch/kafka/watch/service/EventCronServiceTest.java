@@ -19,6 +19,6 @@ public class EventCronServiceTest {
 
     @Test
     public void testTheAwesome() throws Exception {
-        Assert.assertNotEquals("awesome","AWESOME");
+        Assert.assertNotEquals("awesome", "AWESOME");
     }
 }

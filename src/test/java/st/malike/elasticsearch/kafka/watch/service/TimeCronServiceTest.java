@@ -6,11 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-
 /**
  * @autor malike_st
  */
@@ -24,7 +19,7 @@ public class TimeCronServiceTest {
 
     @Test
     public void testTheAwesome() throws Exception {
-        Assert.assertNotEquals("awesome","AWESOME");
+        Assert.assertNotEquals("awesome", "AWESOME");
     }
 
 }

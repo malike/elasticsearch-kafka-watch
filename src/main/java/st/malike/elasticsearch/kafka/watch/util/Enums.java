@@ -10,12 +10,12 @@ public class Enums {
         ERROR
     }
 
-    public enum TriggerType{
+    public enum TriggerType {
         TIME,
         INDEX_OPS
     }
 
-    public enum QuerySymbol{
+    public enum QuerySymbol {
         EQUAL_TO,
         GREATER_THAN_OR_EQUAL_TO,
         LESS_THAN_OR_EQUAL_TO,

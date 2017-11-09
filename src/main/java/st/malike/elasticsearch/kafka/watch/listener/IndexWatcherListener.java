@@ -13,12 +13,12 @@ public class IndexWatcherListener implements IndexEventListener {
 
     @Override
     public void afterIndexCreated(IndexService indexService) {
-        System.out.println("New trigger : Index Created "+indexService.getMetaData().getIndex().getName());
+        System.out.println("New trigger : Index Created " + indexService.getMetaData().getIndex().getName());
     }
 
     @Override
     public void afterIndexRemoved(Index index, IndexSettings indexSettings,
                                   IndicesClusterStateService.AllocatedIndices.IndexRemovalReason reason) {
-        System.out.println("New trigger : Index deleted "+index.getName());
+        System.out.println("New trigger : Index deleted " + index.getName());
     }
 }

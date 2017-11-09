@@ -82,7 +82,7 @@ public class ElasticKafkaWatchPluginTest {
                         "    \"message\" : \"trying out Elasticsearch\"\n" +
                         "}")
                 .when()
-                .post("http://localhost:9201/"+INDEX_NAME+"/"+INDEX_TYPE+"/")
+                .post("http://localhost:9201/" + INDEX_NAME + "/" + INDEX_TYPE + "/")
                 .then()
                 .statusCode(201);
     }
