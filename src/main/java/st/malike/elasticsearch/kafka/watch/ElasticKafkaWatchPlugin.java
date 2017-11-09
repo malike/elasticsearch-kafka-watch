@@ -39,8 +39,8 @@ public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
 
     @Override
     public void onIndexModule(IndexModule indexModule) {
-        indexModule.addIndexOperationListener(new DocumentWatcherListener());
         indexModule.addIndexEventListener(new IndexWatcherListener());
+        indexModule.addIndexOperationListener(new DocumentWatcherListener());
     }
 
 
