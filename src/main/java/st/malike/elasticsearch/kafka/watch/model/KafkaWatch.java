@@ -19,6 +19,8 @@ public class KafkaWatch {
     private List<String> channel;
     private Enums.TriggerType triggerType;
     private String indexOpsQuery;
+    private Enums.QuerySymbol querySymbol;
+    private int expectedHit;
     private Date dateCreated;
 
 
@@ -92,6 +94,22 @@ public class KafkaWatch {
 
     public void setIndexOpsQuery(String indexOpsQuery) {
         this.indexOpsQuery = indexOpsQuery;
+    }
+
+    public Enums.QuerySymbol getQuerySymbol() {
+        return querySymbol;
+    }
+
+    public void setQuerySymbol(Enums.QuerySymbol querySymbol) {
+        this.querySymbol = querySymbol;
+    }
+
+    public int getExpectedHit() {
+        return expectedHit;
+    }
+
+    public void setExpectedHit(int expectedHit) {
+        this.expectedHit = expectedHit;
     }
 
     public Date getDateCreated() {
