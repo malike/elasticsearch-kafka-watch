@@ -51,8 +51,6 @@ public class ElasticKafkaWatchPluginTest {
 
         runner.ensureYellow();
 
-        //setupup dummy data
-
         // create an index
         runner.createIndex(INDEX_NAME, (Settings) null);
 
