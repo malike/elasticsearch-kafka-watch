@@ -1,8 +1,8 @@
 package st.malike.elasticsearch.kafka.watch.listener;
 
+import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.rest.RestChannel;
 import org.elasticsearch.rest.RestRequest;
 import st.malike.elasticsearch.kafka.watch.util.Enums;
@@ -31,6 +31,6 @@ public class CreateWatcherListener implements ActionListener<IndexResponse> {
 
     @Override
     public void onFailure(Exception e) {
-        throw new
+        throw new ElasticsearchException("Failed to create a response.", e.getLocalizedMessage());
     }
 }

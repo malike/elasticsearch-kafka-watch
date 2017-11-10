@@ -11,6 +11,7 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentHelper;
 import org.elasticsearch.rest.*;
+import st.malike.elasticsearch.kafka.watch.listener.CreateWatcherListener;
 import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
 import st.malike.elasticsearch.kafka.watch.util.Enums;
 import st.malike.elasticsearch.kafka.watch.util.JSONResponse;
