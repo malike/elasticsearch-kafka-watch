@@ -151,44 +151,44 @@ public class KafkaWatch implements ToXContent {
         this.dateCreated = dateCreated;
     }
 
-    public XContentBuilder toXContent(XContentBuilder contentBuilder, ToXContent.Params params)
+    public XContentBuilder toXContent(XContentBuilder xContentBuilder, ToXContent.Params params)
             throws IOException {
-        XContentBuilder xContentBuilder = contentBuilder.field("id", id);
+        xContentBuilder.field("id", id);
         xContentBuilder.field("generateReport", generateReport);
-        if (this.cron!=null||!this.cron.isEmpty()) {
+        if (this.cron != null || !this.cron.isEmpty()) {
             xContentBuilder.field("cron", cron);
         }
-        if (this.eventType!=null||!this.eventType.isEmpty()) {
+        if (this.eventType != null || !this.eventType.isEmpty()) {
             xContentBuilder.field("eventType", eventType);
         }
-        if (this.subject!=null||!this.subject.isEmpty()) {
+        if (this.subject != null || !this.subject.isEmpty()) {
             xContentBuilder.field("subject", subject);
         }
-        if (this.description!=null||!this.description.isEmpty()) {
+        if (this.description != null || !this.description.isEmpty()) {
             xContentBuilder.field("description", description);
         }
-        if (this.recipient!=null||!this.recipient.isEmpty()) {
+        if (this.recipient != null || !this.recipient.isEmpty()) {
             xContentBuilder.field("recipient", recipient);
         }
-        if (this.channel!=null||!this.channel.isEmpty()) {
+        if (this.channel != null || !this.channel.isEmpty()) {
             xContentBuilder.field("channel", channel);
         }
-        if (this.triggerType!=null) {
+        if (this.triggerType != null) {
             xContentBuilder.field("triggerType", triggerType);
         }
-        if (this.indexOpsQuery!=null||!this.indexOpsQuery.isEmpty()) {
+        if (this.indexOpsQuery != null || !this.indexOpsQuery.isEmpty()) {
             xContentBuilder.field("indexOpsQuery", indexOpsQuery);
         }
 
-        if (this.querySymbol!=null) {
+        if (this.querySymbol != null) {
             xContentBuilder.field("querySymbol", querySymbol);
         }
-        if (this.indexName!=null||!this.indexName.isEmpty()) {
+        if (this.indexName != null || !this.indexName.isEmpty()) {
             xContentBuilder.field("indexName", indexName);
         }
-        if (this.miscData!=null||!this.miscData.isEmpty()) {
+        if (this.miscData != null || !this.miscData.isEmpty()) {
             xContentBuilder.field("miscData", miscData);
         }
-        return contentBuilder;
+        return xContentBuilder;
     }
 }

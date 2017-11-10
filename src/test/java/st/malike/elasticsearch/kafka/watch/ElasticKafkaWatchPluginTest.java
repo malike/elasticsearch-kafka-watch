@@ -133,9 +133,8 @@ public class ElasticKafkaWatchPluginTest {
                 .post("http://localhost:9201/_newkafkawatch")
                 .then()
                 .statusCode(200)
-                .body("status", Matchers.is(false))
-                .body("data", Matchers.is("No Parameters"))
-                .body("message", Matchers.is(Enums.JSONResponseMessage.ERROR.toString()));
+                .body("status", Matchers.is(true))
+                .body("message", Matchers.is(Enums.JSONResponseMessage.SUCCESS.toString()));
     }
 
     @Test
