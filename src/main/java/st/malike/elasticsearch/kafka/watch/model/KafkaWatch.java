@@ -4,6 +4,7 @@ import st.malike.elasticsearch.kafka.watch.util.Enums;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author malike_st
@@ -21,6 +22,10 @@ public class KafkaWatch {
     private String indexOpsQuery;
     private Enums.QuerySymbol querySymbol;
     private int expectedHit;
+    private int interval;
+    private String indexName;
+    private boolean generateReport;
+    private Map<String, String> miscData;
     private Date dateCreated;
 
 
@@ -110,6 +115,38 @@ public class KafkaWatch {
 
     public void setExpectedHit(int expectedHit) {
         this.expectedHit = expectedHit;
+    }
+
+    public int getInterval() {
+        return interval;
+    }
+
+    public void setInterval(int interval) {
+        this.interval = interval;
+    }
+
+    public String getIndexName() {
+        return indexName;
+    }
+
+    public void setIndexName(String indexName) {
+        this.indexName = indexName;
+    }
+
+    public boolean isGenerateReport() {
+        return generateReport;
+    }
+
+    public void setGenerateReport(boolean generateReport) {
+        this.generateReport = generateReport;
+    }
+
+    public Map<String, String> getMiscData() {
+        return miscData;
+    }
+
+    public void setMiscData(Map<String, String> miscData) {
+        this.miscData = miscData;
     }
 
     public Date getDateCreated() {

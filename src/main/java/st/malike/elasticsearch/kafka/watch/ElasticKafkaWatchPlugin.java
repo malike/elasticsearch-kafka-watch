@@ -24,6 +24,7 @@ import java.util.function.Supplier;
 public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
 
     private static final String KAFKA_WATCH_ELASTICSEARCH_INDEX = "kafka.watch.elasticsearch.index";
+    private static final String KAFKA_WATCH_ELASTICSEARCH_TYPE = "kafka.watch.elasticsearch.type";
     private static final String KAFKA_WATCH_BINDERS = "kafka.watch.binders";
     private static final String KAFKA_WATCH_TOPIC = "kafka.watch.topic";
     private static final String KAFKA_WATCH_DISABLE = "kafka.watch.disable";
@@ -46,5 +47,23 @@ public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
         indexModule.addIndexOperationListener(new DocumentWatcherListener());
     }
 
+    public static String getKafkaWatchElasticsearchIndex() {
+        return KAFKA_WATCH_ELASTICSEARCH_INDEX;
+    }
 
+    public static String getKafkaWatchElasticsearchType() {
+        return KAFKA_WATCH_ELASTICSEARCH_TYPE;
+    }
+
+    public static String getKafkaWatchBinders() {
+        return KAFKA_WATCH_BINDERS;
+    }
+
+    public static String getKafkaWatchTopic() {
+        return KAFKA_WATCH_TOPIC;
+    }
+
+    public static String getKafkaWatchDisable() {
+        return KAFKA_WATCH_DISABLE;
+    }
 }
