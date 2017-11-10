@@ -138,19 +138,8 @@ public class AddWatcherRestAction extends BaseRestHandler {
         Gson gson = new Gson();
         prepareIndex.setOpType(DocWriteRequest.OpType.CREATE);
         prepareIndex.setId(kafkaWatch.getId());
-        prepareIndex.setSource(gson.fromJson(gson.toJson(kafkaWatch), Map.class));
-        prepareIndex.execute();
-        return channel -> {
-            XContentBuilder builder = channel.newBuilder();
-            message.setStatus(true);
-            message.setCount(1L);
-            message.setData(kafkaWatch);
-            message.setMessage(Enums.JSONResponseMessage.SUCCESS.toString());
-            builder.startObject();
-            message.toXContent(builder, restRequest);
-            builder.endObject();
-            channel.sendResponse(new BytesRestResponse(RestStatus.OK, builder));
-        };
+        Map m = gson.fromJson(gson.toJson(kafkaWatch), Map.class);
+        prepareIndex.setSource(m);
+        return channel -> prepareIndex.execute(new CreateWatcherListener(channel, restRequest));
     }
-
 }
