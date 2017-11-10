@@ -1,7 +1,6 @@
 package st.malike.elasticsearch.kafka.watch;
 
 import org.apache.log4j.Logger;
-import org.elasticsearch.action.DocWriteRequest;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.client.node.NodeClient;
 import org.elasticsearch.common.inject.Inject;
@@ -32,7 +31,7 @@ public class RemoveWatcherRestAction extends BaseRestHandler {
     @Override
     protected RestChannelConsumer prepareRequest(RestRequest restRequest, NodeClient client) throws IOException {
         JSONResponse message = new JSONResponse();
-        IndexRequestBuilder prepareIndex = client.prepareIndex("","");
+        IndexRequestBuilder prepareIndex = client.prepareIndex("", "");
 //        prepareIndex.setOpType(DocWriteRequest.OpType.valueOf())
         return channel -> {
             message.setStatus(true);

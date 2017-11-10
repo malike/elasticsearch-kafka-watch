@@ -29,24 +29,6 @@ public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
     private static final String KAFKA_WATCH_TOPIC = "kafka.watch.topic";
     private static final String KAFKA_WATCH_DISABLE = "kafka.watch.disable";
 
-    @Override
-    public List<RestHandler> getRestHandlers(Settings settings,
-                                             RestController restController, ClusterSettings clusterSettings,
-                                             IndexScopedSettings indexScopedSettings,
-                                             SettingsFilter settingsFilter,
-                                             IndexNameExpressionResolver indexNameExpressionResolver,
-                                             Supplier<DiscoveryNodes> nodesInCluster) {
-        return Arrays.asList(new AddWatcherRestAction(settings, restController),
-                new RemoveWatcherRestAction(settings, restController),
-                new ViewWatchersRestAction(settings, restController));
-    }
-
-    @Override
-    public void onIndexModule(IndexModule indexModule) {
-        indexModule.addIndexEventListener(new IndexWatcherListener());
-        indexModule.addIndexOperationListener(new DocumentWatcherListener());
-    }
-
     public static String getKafkaWatchElasticsearchIndex() {
         return KAFKA_WATCH_ELASTICSEARCH_INDEX;
     }
@@ -65,5 +47,23 @@ public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
 
     public static String getKafkaWatchDisable() {
         return KAFKA_WATCH_DISABLE;
+    }
+
+    @Override
+    public List<RestHandler> getRestHandlers(Settings settings,
+                                             RestController restController, ClusterSettings clusterSettings,
+                                             IndexScopedSettings indexScopedSettings,
+                                             SettingsFilter settingsFilter,
+                                             IndexNameExpressionResolver indexNameExpressionResolver,
+                                             Supplier<DiscoveryNodes> nodesInCluster) {
+        return Arrays.asList(new AddWatcherRestAction(settings, restController),
+                new RemoveWatcherRestAction(settings, restController),
+                new ViewWatchersRestAction(settings, restController));
+    }
+
+    @Override
+    public void onIndexModule(IndexModule indexModule) {
+        indexModule.addIndexEventListener(new IndexWatcherListener());
+        indexModule.addIndexOperationListener(new DocumentWatcherListener());
     }
 }

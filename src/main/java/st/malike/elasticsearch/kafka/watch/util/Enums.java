@@ -7,7 +7,9 @@ public class Enums {
 
     public enum JSONResponseMessage {
         SUCCESS,
-        ERROR
+        ERROR,
+        MISSING_PARAM,
+        INVALID_DATA,
     }
 
     public enum TriggerType {

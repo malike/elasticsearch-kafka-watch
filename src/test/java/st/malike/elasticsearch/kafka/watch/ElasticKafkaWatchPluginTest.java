@@ -88,7 +88,7 @@ public class ElasticKafkaWatchPluginTest {
     }
 
     @Test
-    public void addNewWatcher() {
+    public void addNewWatcherEmptyParams() {
         given()
                 .log().all().contentType("application/json")
                 .body(new Gson().toJson(param))
@@ -96,8 +96,46 @@ public class ElasticKafkaWatchPluginTest {
                 .post("http://localhost:9201/_newkafkawatch")
                 .then()
                 .statusCode(200)
-                .body("status", Matchers.is(true))
-                .body("message", Matchers.is(Enums.JSONResponseMessage.SUCCESS.toString()));
+                .body("status", Matchers.is(false))
+                .body("message", Matchers.is(Enums.JSONResponseMessage.MISSING_PARAM.toString()));
+    }
+
+    @Test
+    public void addNewWatcherMissingParam() {
+
+        param.put("querySymbol", "");
+        param.put("expectedHit", 5);
+
+        given()
+                .log().all().contentType("application/json")
+                .body(new Gson().toJson(param))
+                .when()
+                .post("http://localhost:9201/_newkafkawatch")
+                .then()
+                .statusCode(200)
+                .body("status", Matchers.is(false))
+                .body("message", Matchers.is(Enums.JSONResponseMessage.INVALID_DATA.toString()));
+    }
+
+    @Test
+    public void addNewWatcher() {
+
+        param.put("eventType", "SUBSCRIPTION");
+        param.put("description", "Send welcome notification for every subscription created");
+        param.put("channel", "SMS");
+        param.put("trigger", "INDEX_OPS");
+
+
+        given()
+                .log().all().contentType("application/json")
+                .body(new Gson().toJson(param))
+                .when()
+                .post("http://localhost:9201/_newkafkawatch")
+                .then()
+                .statusCode(200)
+                .body("status", Matchers.is(false))
+                .body("data", Matchers.is("No Parameters"))
+                .body("message", Matchers.is(Enums.JSONResponseMessage.ERROR.toString()));
     }
 
     @Test

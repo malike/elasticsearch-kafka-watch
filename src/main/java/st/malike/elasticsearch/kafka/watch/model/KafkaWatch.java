@@ -1,7 +1,10 @@
 package st.malike.elasticsearch.kafka.watch.model;
 
+import org.elasticsearch.common.xcontent.ToXContent;
+import org.elasticsearch.common.xcontent.XContentBuilder;
 import st.malike.elasticsearch.kafka.watch.util.Enums;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +12,7 @@ import java.util.Map;
 /**
  * @author malike_st
  */
-public class KafkaWatch {
+public class KafkaWatch implements ToXContent {
 
     private String id;
     private String cron;
@@ -22,7 +25,6 @@ public class KafkaWatch {
     private String indexOpsQuery;
     private Enums.QuerySymbol querySymbol;
     private int expectedHit;
-    private int interval;
     private String indexName;
     private boolean generateReport;
     private Map<String, String> miscData;
@@ -117,14 +119,6 @@ public class KafkaWatch {
         this.expectedHit = expectedHit;
     }
 
-    public int getInterval() {
-        return interval;
-    }
-
-    public void setInterval(int interval) {
-        this.interval = interval;
-    }
-
     public String getIndexName() {
         return indexName;
     }
@@ -155,5 +149,46 @@ public class KafkaWatch {
 
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public XContentBuilder toXContent(XContentBuilder contentBuilder, ToXContent.Params params)
+            throws IOException {
+        XContentBuilder xContentBuilder = contentBuilder.field("id", id);
+        xContentBuilder.field("generateReport", generateReport);
+        if (this.cron!=null||!this.cron.isEmpty()) {
+            xContentBuilder.field("cron", cron);
+        }
+        if (this.eventType!=null||!this.eventType.isEmpty()) {
+            xContentBuilder.field("eventType", eventType);
+        }
+        if (this.subject!=null||!this.subject.isEmpty()) {
+            xContentBuilder.field("subject", subject);
+        }
+        if (this.description!=null||!this.description.isEmpty()) {
+            xContentBuilder.field("description", description);
+        }
+        if (this.recipient!=null||!this.recipient.isEmpty()) {
+            xContentBuilder.field("recipient", recipient);
+        }
+        if (this.channel!=null||!this.channel.isEmpty()) {
+            xContentBuilder.field("channel", channel);
+        }
+        if (this.triggerType!=null) {
+            xContentBuilder.field("triggerType", triggerType);
+        }
+        if (this.indexOpsQuery!=null||!this.indexOpsQuery.isEmpty()) {
+            xContentBuilder.field("indexOpsQuery", indexOpsQuery);
+        }
+
+        if (this.querySymbol!=null) {
+            xContentBuilder.field("querySymbol", querySymbol);
+        }
+        if (this.indexName!=null||!this.indexName.isEmpty()) {
+            xContentBuilder.field("indexName", indexName);
+        }
+        if (this.miscData!=null||!this.miscData.isEmpty()) {
+            xContentBuilder.field("miscData", miscData);
+        }
+        return contentBuilder;
     }
 }
