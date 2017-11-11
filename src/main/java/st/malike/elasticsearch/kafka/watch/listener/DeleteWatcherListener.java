@@ -72,6 +72,7 @@ public class DeleteWatcherListener implements ActionListener<DeleteResponse> {
 
     @Override
     public void onFailure(Exception e) {
+        log.error("Error deleting watcher " + e.getLocalizedMessage());
         throw new ElasticsearchException("Exception :", e.getLocalizedMessage());
     }
 }

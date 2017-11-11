@@ -1,15 +1,21 @@
 package st.malike.elasticsearch.kafka.watch;
 
 import org.apache.log4j.Logger;
+import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.node.NodeClient;
 import org.elasticsearch.common.inject.Inject;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.rest.*;
-import st.malike.elasticsearch.kafka.watch.util.Enums;
-import st.malike.elasticsearch.kafka.watch.util.JSONResponse;
+import org.elasticsearch.common.xcontent.XContentHelper;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.rest.BaseRestHandler;
+import org.elasticsearch.rest.RestController;
+import org.elasticsearch.rest.RestRequest;
+import org.elasticsearch.search.sort.SortOrder;
+import st.malike.elasticsearch.kafka.watch.listener.ViewWatchersListener;
 
 import java.io.IOException;
+import java.util.Map;
 
 import static org.elasticsearch.rest.RestRequest.Method.POST;
 
@@ -29,17 +35,29 @@ public class ViewWatchersRestAction extends BaseRestHandler {
     @SuppressWarnings("unchecked")
     @Override
     protected RestChannelConsumer prepareRequest(RestRequest restRequest, NodeClient client) throws IOException {
-        JSONResponse response = new JSONResponse();
-        return channel -> {
-            response.setStatus(true);
-            response.setCount(0L);
-            response.setMessage(Enums.JSONResponseMessage.SUCCESS.toString());
-            XContentBuilder builder = channel.newBuilder();
-            builder.startObject();
-            response.toXContent(builder, restRequest);
-            builder.endObject();
-            channel.sendResponse(new BytesRestResponse(RestStatus.OK, builder));
-        };
+        //limit and offset
+        Integer from = 0;
+        Integer size = 50;
+        if (restRequest.content().length() > 0) {
+            Map<String, Object> map = XContentHelper.convertToMap(restRequest.content(), false, null).v2();
+            if (!map.isEmpty()) {
+                if (map.containsKey("from")) {
+                    from = (Integer) map.get("from");
+                }
+                if (map.containsKey("limit")) {
+                    from = (Integer) map.get("limit");
+                }
+            }
+        }
+        SearchRequestBuilder prepareSearch = client.prepareSearch(
+                ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchIndex());
+        prepareSearch.setFrom(from);
+        prepareSearch.setSize(size);
+        prepareSearch.setSearchType(SearchType.DFS_QUERY_THEN_FETCH);
+        prepareSearch.setTypes(ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchType());
+        prepareSearch.setQuery(QueryBuilders.matchAllQuery());
+        return channel -> prepareSearch.execute(new ViewWatchersListener(channel, restRequest));
     }
+
 
 }
