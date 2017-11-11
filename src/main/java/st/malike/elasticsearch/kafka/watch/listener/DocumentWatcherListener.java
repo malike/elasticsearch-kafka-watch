@@ -15,8 +15,8 @@ public class DocumentWatcherListener implements IndexingOperationListener {
 
     @Override
     public void postIndex(ShardId shardId, Engine.Index index, Engine.IndexResult result) {
-        if((!shardId.getIndexName().equals(ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchIndex())
-        && (!ElasticKafkaWatchPlugin.getKafkaWatchDisable()))) {
+        if ((!shardId.getIndexName().equals(ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchIndex())
+                && (!ElasticKafkaWatchPlugin.getKafkaWatchDisable()))) {
             log.info("New trigger : Document Created " + index.source().utf8ToString());
         }
     }
@@ -24,7 +24,7 @@ public class DocumentWatcherListener implements IndexingOperationListener {
 
     @Override
     public void postDelete(ShardId shardId, Engine.Delete delete, Engine.DeleteResult result) {
-        if((!shardId.getIndexName().equals(ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchIndex())
+        if ((!shardId.getIndexName().equals(ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchIndex())
                 && (!ElasticKafkaWatchPlugin.getKafkaWatchDisable()))) {
             log.info("New trigger : Document deleted " + delete.id());
         }
