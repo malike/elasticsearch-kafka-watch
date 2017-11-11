@@ -233,11 +233,10 @@ public class ElasticKafkaWatchPluginTest {
                 .body("status", Matchers.is(true));
 
         //to refresh data... for fetch
+        runner.flush();
         runner.refresh();
 
         param = new HashMap<>();
-        param.put("from", 0);
-        param.put("limit", 10);
 
         given()
                 .log().all().contentType("application/json")
@@ -284,7 +283,9 @@ public class ElasticKafkaWatchPluginTest {
                 .body("status", Matchers.is(true));
 
         //to refresh data... for fetch
+        runner.flush();
         runner.refresh();
+
 
         String queryString = "{"
                 + "    \"match\": {"
