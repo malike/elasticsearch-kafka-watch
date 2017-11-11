@@ -45,7 +45,7 @@ public class ViewWatchersRestAction extends BaseRestHandler {
                     from = (Integer) map.get("from");
                 }
                 if (map.containsKey("limit")) {
-                    from = (Integer) map.get("limit");
+                    size = (Integer) map.get("limit");
                 }
             }
         }

@@ -227,10 +227,13 @@ public class ElasticKafkaWatchPluginTest {
                 .when()
                 .post("http://localhost:9201/_newkafkawatch")
                 .then()
-                .statusCode(200);
+                .statusCode(200)
+                .body("status", Matchers.is(true));
 
 
         param = new HashMap<>();
+        param.put("from",0);
+        param.put("limit",10);
 
         given()
                 .log().all().contentType("application/json")
