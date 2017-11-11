@@ -1,6 +1,8 @@
 package st.malike.elasticsearch.kafka.watch;
 
 import com.google.gson.Gson;
+import com.jayway.restassured.response.ValidatableResponse;
+import org.apache.commons.lang.RandomStringUtils;
 import org.codelibs.elasticsearch.runner.ElasticsearchClusterRunner;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.node.Node;
@@ -138,7 +140,54 @@ public class ElasticKafkaWatchPluginTest {
     }
 
     @Test
+    public void removeWatcherNoParams() {
+        given()
+                .log().all().contentType("application/json")
+                .body(new Gson().toJson(param))
+                .when()
+                .post("http://localhost:9201/_removekafkawatch")
+                .then()
+                .statusCode(200)
+                .body("status", Matchers.is(false))
+                .body("message", Matchers.is(Enums.JSONResponseMessage.MISSING_PARAM.toString()));
+    }
+
+    @Test
+    public void removeWatcherUnknownWatcherId() {
+
+        param.put("id", RandomStringUtils.randomAlphanumeric(5));
+
+        given()
+                .log().all().contentType("application/json")
+                .body(new Gson().toJson(param))
+                .when()
+                .post("http://localhost:9201/_removekafkawatch")
+                .then()
+                .statusCode(200)
+                .body("status", Matchers.is(false))
+                .body("message", Matchers.is(Enums.JSONResponseMessage.DATA_NOT_FOUND.toString()));
+    }
+
+    @Test
     public void removeWatcher() {
+
+        param.put("eventType", "SUBSCRIPTION");
+        param.put("description", "Send welcome notification for every subscription created");
+        param.put("channel", "SMS");
+        param.put("trigger", "INDEX_OPS");
+
+
+        ValidatableResponse validatableResponse = given()
+                .log().all().contentType("application/json")
+                .body(new Gson().toJson(param))
+                .when()
+                .post("http://localhost:9201/_newkafkawatch")
+                .then()
+                .statusCode(200);
+
+        String id = validatableResponse.extract().body().jsonPath().get("data");
+        param.put("id", id);
+
         given()
                 .log().all().contentType("application/json")
                 .body(new Gson().toJson(param))

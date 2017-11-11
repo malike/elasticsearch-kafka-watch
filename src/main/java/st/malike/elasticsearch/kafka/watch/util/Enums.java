@@ -10,6 +10,7 @@ public class Enums {
         ERROR,
         MISSING_PARAM,
         INVALID_DATA,
+        DATA_NOT_FOUND
     }
 
     public enum TriggerType {

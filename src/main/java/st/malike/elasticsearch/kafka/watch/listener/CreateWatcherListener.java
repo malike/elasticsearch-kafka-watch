@@ -37,7 +37,7 @@ public class CreateWatcherListener implements ActionListener<IndexResponse> {
             if (indexResponse.getResult().getLowercase().equals("created")) {
                 message.setStatus(true);
                 message.setCount(1L);
-                message.setData(indexResponse);
+                message.setData(indexResponse.getId());
                 message.setMessage(Enums.JSONResponseMessage.SUCCESS.toString());
                 builder.startObject();
                 message.toXContent(builder, restRequest);
@@ -69,6 +69,6 @@ public class CreateWatcherListener implements ActionListener<IndexResponse> {
     @Override
     public void onFailure(Exception e) {
         log.error("Error creating new watcher " + e.getLocalizedMessage());
-        throw new ElasticsearchException("Failed to create a response.", e.getLocalizedMessage());
+        throw new ElasticsearchException("Exception :", e.getLocalizedMessage());
     }
 }
