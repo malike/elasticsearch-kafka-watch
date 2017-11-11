@@ -45,8 +45,8 @@ public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
         return KAFKA_WATCH_TOPIC;
     }
 
-    public static String getKafkaWatchDisable() {
-        return KAFKA_WATCH_DISABLE;
+    public static Boolean getKafkaWatchDisable() {
+        return KAFKA_WATCH_DISABLE.toLowerCase().equals("false");
     }
 
     @Override
