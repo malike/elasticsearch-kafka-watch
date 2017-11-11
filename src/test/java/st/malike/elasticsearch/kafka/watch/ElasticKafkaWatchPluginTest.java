@@ -187,6 +187,8 @@ public class ElasticKafkaWatchPluginTest {
 
         String id = validatableResponse.extract().body().jsonPath().get("data");
         param.put("id", id);
+        //to refresh data... for fetch
+        runner.refresh();
 
         given()
                 .log().all().contentType("application/json")
@@ -230,6 +232,8 @@ public class ElasticKafkaWatchPluginTest {
                 .statusCode(200)
                 .body("status", Matchers.is(true));
 
+        //to refresh data... for fetch
+        runner.refresh();
 
         param = new HashMap<>();
         param.put("from",0);
