@@ -253,7 +253,7 @@ public class ElasticKafkaWatchPluginTest {
     }
 
     @Test
-    public void searchWatchers() {
+    public void searchWatchersNoQuery() {
         given()
                 .log().all().contentType("application/json")
                 .body(new Gson().toJson(param))
@@ -263,6 +263,49 @@ public class ElasticKafkaWatchPluginTest {
                 .statusCode(200)
                 .body("status", Matchers.is(true))
                 .body("message", Matchers.is(Enums.JSONResponseMessage.SUCCESS.toString()));
+    }
+
+  @Test
+    public void searchWatchers() {
+
+      param.put("eventType", "SUBSCRIPTION");
+      param.put("description", "Send welcome notification for every subscription created");
+      param.put("channel", "SMS");
+      param.put("trigger", "INDEX_OPS");
+
+
+      given()
+              .log().all().contentType("application/json")
+              .body(new Gson().toJson(param))
+              .when()
+              .post("http://localhost:9201/_newkafkawatch")
+              .then()
+              .statusCode(200)
+              .body("status", Matchers.is(true));
+
+      //to refresh data... for fetch
+      runner.refresh();
+
+      String queryString = "{"
+                + "    \"match\": {"
+                + "      \"eventType\": \"SUBSCRIPTION\""
+                + "    }"
+                + "}";
+
+      param.put("query",queryString);
+
+
+      given()
+                .log().all().contentType("application/json")
+                .body(new Gson().toJson(param))
+                .when()
+                .post("http://localhost:9201/_listkafkawatch")
+                .then()
+                .statusCode(200)
+              .body("status", Matchers.is(true))
+              .body("count", Matchers.is(1))
+              .body("data[0].eventType", Matchers.is("SUBSCRIPTION"))
+              .body("message", Matchers.is(Enums.JSONResponseMessage.SUCCESS.toString()));
     }
 
 
