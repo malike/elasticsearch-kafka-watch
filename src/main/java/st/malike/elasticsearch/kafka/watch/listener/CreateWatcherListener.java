@@ -34,7 +34,7 @@ public class CreateWatcherListener implements ActionListener<IndexResponse> {
         JSONResponse message = new JSONResponse();
         try {
             XContentBuilder builder = restChannel.newBuilder();
-            if(indexResponse.getResult().getLowercase().equals("created")) {
+            if (indexResponse.getResult().getLowercase().equals("created")) {
                 message.setStatus(true);
                 message.setCount(1L);
                 message.setData(indexResponse);
@@ -42,7 +42,7 @@ public class CreateWatcherListener implements ActionListener<IndexResponse> {
                 builder.startObject();
                 message.toXContent(builder, restRequest);
                 builder.endObject();
-            }else{
+            } else {
                 message.setStatus(false);
                 message.setCount(0L);
                 message.setData(indexResponse);
