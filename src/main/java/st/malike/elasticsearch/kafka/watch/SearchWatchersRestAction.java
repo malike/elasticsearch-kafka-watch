@@ -35,10 +35,10 @@ public class SearchWatchersRestAction extends BaseRestHandler {
     @SuppressWarnings("unchecked")
     @Override
     protected RestChannelConsumer prepareRequest(RestRequest restRequest, NodeClient client) throws IOException {
-        JSONResponse message =new JSONResponse();
+        JSONResponse message = new JSONResponse();
         Integer from = 0;
         Integer size = 50;
-        String query=null;
+        String query = null;
         if (restRequest.content().length() > 0) {
             Map<String, Object> map = XContentHelper.convertToMap(restRequest.content(), false, null).v2();
             if (!map.isEmpty()) {
@@ -53,7 +53,7 @@ public class SearchWatchersRestAction extends BaseRestHandler {
                 }
             }
         }
-        if(query==null){
+        if (query == null) {
             return channel -> {
                 message.setStatus(false);
                 message.setCount(0L);

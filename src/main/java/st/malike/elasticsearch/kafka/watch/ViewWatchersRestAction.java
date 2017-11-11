@@ -11,7 +11,6 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.rest.BaseRestHandler;
 import org.elasticsearch.rest.RestController;
 import org.elasticsearch.rest.RestRequest;
-import org.elasticsearch.search.sort.SortOrder;
 import st.malike.elasticsearch.kafka.watch.listener.ViewWatchersListener;
 
 import java.io.IOException;
