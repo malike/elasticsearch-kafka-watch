@@ -9,21 +9,46 @@ Supports **2** types of triggers.
 
 #### 1. Time Based Triggers
 <br>
+
 #### 2. Event Based Triggers
 
 <br>
 
 ## Install
 
-
 <br>
+
+## Setup And Requirements
+
 
 ## Usage
 
+#### 1. Time Based Triggers
+<br>
+
+#### 2. Event Based Triggers
+
+<br>
+
+#### 3. Report Scheduling
 
 ## Supported
 
+<br>
+
 ## Download
+
+<br>
+
+## Contribute
+
+<br>
+
+## Code of Conduct
+
+<br>
+
+## License
 
 
 
