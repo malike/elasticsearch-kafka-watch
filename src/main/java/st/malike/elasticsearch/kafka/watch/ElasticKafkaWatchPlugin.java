@@ -58,7 +58,8 @@ public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
                                              Supplier<DiscoveryNodes> nodesInCluster) {
         return Arrays.asList(new AddWatcherRestAction(settings, restController),
                 new RemoveWatcherRestAction(settings, restController),
-                new ViewWatchersRestAction(settings, restController));
+                new ViewWatchersRestAction(settings, restController),
+                new SearchWatchersRestAction(settings, restController));
     }
 
     @Override

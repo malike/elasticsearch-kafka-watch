@@ -217,6 +217,8 @@ public class ElasticKafkaWatchPluginTest {
     @Test
     public void viewWatchers() {
 
+        runner.deleteIndex(ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchIndex());
+
         param.put("eventType", "SUBSCRIPTION");
         param.put("description", "Send welcome notification for every subscription created");
         param.put("channel", "SMS");
@@ -257,15 +259,17 @@ public class ElasticKafkaWatchPluginTest {
                 .log().all().contentType("application/json")
                 .body(new Gson().toJson(param))
                 .when()
-                .post("http://localhost:9201/_listkafkawatch")
+                .post("http://localhost:9201/_searchkafkawatch")
                 .then()
                 .statusCode(200)
-                .body("status", Matchers.is(true))
-                .body("message", Matchers.is(Enums.JSONResponseMessage.SUCCESS.toString()));
+                .body("status", Matchers.is(false))
+                .body("message", Matchers.is(Enums.JSONResponseMessage.MISSING_PARAM.toString()));
     }
 
     @Test
     public void searchWatchers() {
+
+        runner.deleteIndex(ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchIndex());
 
         param.put("eventType", "SUBSCRIPTION");
         param.put("description", "Send welcome notification for every subscription created");
@@ -293,14 +297,14 @@ public class ElasticKafkaWatchPluginTest {
                 + "    }"
                 + "}";
 
-        param.put("query", queryString);
+        param.put("param", queryString);
 
 
         given()
                 .log().all().contentType("application/json")
                 .body(new Gson().toJson(param))
                 .when()
-                .post("http://localhost:9201/_listkafkawatch")
+                .post("http://localhost:9201/_searchkafkawatch")
                 .then()
                 .statusCode(200)
                 .body("status", Matchers.is(true))
