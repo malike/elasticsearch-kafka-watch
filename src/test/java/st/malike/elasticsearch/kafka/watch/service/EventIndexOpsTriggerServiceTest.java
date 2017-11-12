@@ -21,4 +21,14 @@ public class EventIndexOpsTriggerServiceTest {
     public void testTheAwesome() throws Exception {
         Assert.assertNotEquals("awesome", "AWESOME");
     }
+
+    @Test
+    public void testEvaluateRuleForIndexCreate() {
+        Assert.assertNotEquals("awesome", "AWESOME");
+    }
+
+    @Test
+    public void testEvaluateRuleForIndexDelete() {
+        Assert.assertNotEquals("awesome", "AWESOME");
+    }
 }

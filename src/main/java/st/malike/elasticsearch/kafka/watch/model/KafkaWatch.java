@@ -27,6 +27,7 @@ public class KafkaWatch implements ToXContent {
     private int expectedHit;
     private String indexName;
     private boolean generateReport;
+    private String reportFormat;
     private Map<String, String> miscData;
     private Date dateCreated;
 
@@ -141,6 +142,14 @@ public class KafkaWatch implements ToXContent {
 
     public void setMiscData(Map<String, String> miscData) {
         this.miscData = miscData;
+    }
+
+    public String getReportFormat() {
+        return reportFormat;
+    }
+
+    public void setReportFormat(String reportFormat) {
+        this.reportFormat = reportFormat;
     }
 
     public Date getDateCreated() {

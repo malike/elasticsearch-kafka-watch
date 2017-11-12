@@ -28,6 +28,7 @@ public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
     private static final String KAFKA_WATCH_BINDERS = "kafka.watch.binders";
     private static final String KAFKA_WATCH_TOPIC = "kafka.watch.topic";
     private static final String KAFKA_WATCH_DISABLE = "kafka.watch.disable";
+    private static final String REPORT_ENGINE_DISABLE = "report.engine.disable";
 
     public static String getKafkaWatchElasticsearchIndex() {
         return KAFKA_WATCH_ELASTICSEARCH_INDEX;
@@ -47,6 +48,10 @@ public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
 
     public static Boolean getKafkaWatchDisable() {
         return KAFKA_WATCH_DISABLE.toLowerCase().equals("false");
+    }
+
+    public static String getReportEngineDisable() {
+        return REPORT_ENGINE_DISABLE;
     }
 
     @Override

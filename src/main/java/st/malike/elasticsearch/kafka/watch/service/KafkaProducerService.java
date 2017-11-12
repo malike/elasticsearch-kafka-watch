@@ -1,7 +1,12 @@
 package st.malike.elasticsearch.kafka.watch.service;
 
 /**
- * malike_st.
+ * @autor malike_st
  */
 public class KafkaProducerService {
+
+    public void send(String event) {
+
+    }
+
 }

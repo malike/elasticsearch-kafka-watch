@@ -21,4 +21,9 @@ public class KafkaProducerServiceTest {
     public void testTheAwesome() throws Exception {
         Assert.assertNotEquals("awesome", "AWESOME");
     }
+
+    @Test
+    public void testSend() {
+        Assert.assertNotEquals("awesome", "AWESOME");
+    }
 }

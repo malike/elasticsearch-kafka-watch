@@ -7,7 +7,12 @@ import org.elasticsearch.index.engine.Engine;
  */
 public class EventIndexOpsTriggerService {
 
-    public boolean evaluateRule(Engine.Index index,Engine.IndexResult indexResult){
-
+    public boolean evaluateRule(String indexName, Engine.Index index, Engine.IndexResult indexResult) {
+        return true;
     }
+
+    public boolean evaluateRule(String indexName, Engine.Delete delete, Engine.DeleteResult deleteResult) {
+        return true;
+    }
+
 }
