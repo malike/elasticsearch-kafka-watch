@@ -2,4 +2,9 @@
 
 ## elastic-kafka-watch
 
-A custom watcher for ElasticSearch. Works with Apache Kafka. 
+[ElasticSearch Watcher](https://www.elastic.co/products/x-pack/alerting) is awesome but not free.
+
+This project, however, is a custom watcher for ElasticSearch which works with Apache Kafka to give close experience as the one from Elastic.
+
+
+
