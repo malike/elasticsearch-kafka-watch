@@ -10,7 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
  * @autor malike_st
  */
 @RunWith(MockitoJUnitRunner.class)
-public class TimeCronServiceTest {
+public class TimeTriggerServiceTest {
 
     @Before
     public void setUp() throws Exception {
