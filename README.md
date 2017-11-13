@@ -16,7 +16,10 @@ Supports **2** types of triggers.
 
 ## Install
 
+``sudo bin/elasticsearch-plugin install [plugin_name] ``
+
 <br>
+
 
 ## Setup And Requirements
 
@@ -34,21 +37,37 @@ Supports **2** types of triggers.
 
 ## Supported
 
-<br>
+ElasticSearch versions supported by this plugin include :
+
+| ElasticSearch Version | Comments |
+| --------------------- | -------- |
+| [5.4](https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.4.0.zip)               | -   |
+
+<p>&nbsp;</p>
 
 ## Download
 
-<br>
+| ElasticSearch Version | Comments |
+| --------------------- | -------- |
+| [5.4](https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.4.0.zip)               | [-]()  |
+
+<p>&nbsp;</p>
 
 ## Contribute
 
-<br>
+Contributions are always welcome!
+Please read the [contribution guidelines](CONTRIBUTING.md) first.
 
 ## Code of Conduct
 
-<br>
+Please read [this](CODE_OF_CONDUCT.md).
 
 ## License
+
+[GNU General Public License v3.0](https://github.com/malike/elasticsearch-kafka-watch/blob/master/LICENSE)
+
+
+
 
 
 
