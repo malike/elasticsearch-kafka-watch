@@ -314,4 +314,47 @@ public class ElasticKafkaWatchPluginTest {
     }
 
 
+    @Test
+    public void testEventTriggerAfterDocumentIndexed() {
+
+        given()
+                .log().all().contentType("application/json")
+                .body(new Gson().toJson(param))
+                .when()
+                .post("http://localhost:9201/_newkafkawatch")
+                .then()
+                .statusCode(200)
+                .body("status", Matchers.is(false))
+                .body("message", Matchers.is(Enums.JSONResponseMessage.MISSING_PARAM.toString()));
+    }
+
+    @Test
+    public void testEventNotTriggerAfterDocumentIndexed() {
+
+        given()
+                .log().all().contentType("application/json")
+                .body(new Gson().toJson(param))
+                .when()
+                .post("http://localhost:9201/_newkafkawatch")
+                .then()
+                .statusCode(200)
+                .body("status", Matchers.is(false))
+                .body("message", Matchers.is(Enums.JSONResponseMessage.MISSING_PARAM.toString()));
+    }
+
+    @Test
+    public void testEventTriggerBySchedule() {
+
+        given()
+                .log().all().contentType("application/json")
+                .body(new Gson().toJson(param))
+                .when()
+                .post("http://localhost:9201/_newkafkawatch")
+                .then()
+                .statusCode(200)
+                .body("status", Matchers.is(false))
+                .body("message", Matchers.is(Enums.JSONResponseMessage.MISSING_PARAM.toString()));
+    }
+
+
 }
