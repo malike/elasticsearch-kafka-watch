@@ -28,6 +28,7 @@ public class KafkaWatch implements ToXContent {
     private String indexName;
     private boolean generateReport;
     private String reportFormat;
+    private String reportTemplatePath;
     private Map<String, String> miscData;
     private Date dateCreated;
 
@@ -152,6 +153,14 @@ public class KafkaWatch implements ToXContent {
         this.reportFormat = reportFormat;
     }
 
+    public String getReportTemplatePath() {
+        return reportTemplatePath;
+    }
+
+    public void setReportTemplatePath(String reportTemplatePath) {
+        this.reportTemplatePath = reportTemplatePath;
+    }
+
     public Date getDateCreated() {
         return dateCreated;
     }
@@ -160,9 +169,12 @@ public class KafkaWatch implements ToXContent {
         this.dateCreated = dateCreated;
     }
 
+
+
     public XContentBuilder toXContent(XContentBuilder xContentBuilder, ToXContent.Params params)
             throws IOException {
         xContentBuilder.field("id", id);
+        xContentBuilder.field("dateCreated", dateCreated);
         xContentBuilder.field("generateReport", generateReport);
         if (this.cron != null || !this.cron.isEmpty()) {
             xContentBuilder.field("cron", cron);
@@ -197,6 +209,9 @@ public class KafkaWatch implements ToXContent {
         }
         if (this.miscData != null || !this.miscData.isEmpty()) {
             xContentBuilder.field("miscData", miscData);
+        }
+        if (this.reportTemplatePath != null || !this.reportTemplatePath.isEmpty()) {
+            xContentBuilder.field("reportTemplatePath", reportTemplatePath);
         }
         return xContentBuilder;
     }
