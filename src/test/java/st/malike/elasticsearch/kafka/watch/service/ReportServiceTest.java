@@ -1,13 +1,14 @@
 package st.malike.elasticsearch.kafka.watch.service;
 
 import com.google.gson.Gson;
+import org.apache.commons.codec.Charsets;
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpVersion;
-import org.apache.http.ProtocolVersion;
+import org.apache.http.*;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.BasicHttpEntity;
 import org.apache.http.entity.EntityTemplate;
+import org.apache.http.entity.SerializableEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHttpResponse;
 import org.apache.http.message.BasicStatusLine;
@@ -24,7 +25,9 @@ import st.malike.elasticsearch.kafka.watch.model.KafkaEvent;
 import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
 import st.malike.elasticsearch.kafka.watch.util.Enums;
 import st.malike.elasticsearch.kafka.watch.util.JSONResponse;
+import sun.nio.cs.StandardCharsets;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -39,9 +42,10 @@ public class ReportServiceTest {
     private ReportService reportService;
     @Mock
     private HttpClient httpClient;
-    private Gson gson=new Gson();
+    @Mock
+    StatusLine statusLine;
+    HttpResponse httpResponse;
     private KafkaWatch kafkaWatch;
-    private HttpResponse httpResponse;
     JSONResponse jsonResponse ;
     private String HTML ="<html><title>Test</title><body>Sample </body></html>";
 
@@ -63,13 +67,20 @@ public class ReportServiceTest {
         kafkaWatch.setReportFormat("HTML");
         kafkaWatch.setRecipient(Arrays.asList("233201234567","st.malike@gmail.com"));
 
-        httpResponse = new BasicHttpResponse(new ProtocolVersion("Test",0,100),200,"Test");
+
        jsonResponse= new JSONResponse();
         jsonResponse.setData(HTML);
         jsonResponse.setCount(1L);
         jsonResponse.setStatus(true);
         jsonResponse.setMessage("SUCCESS");
-        HttpEntity httpEntity =new StringEntity(new Gson().toJson(jsonResponse));
+
+        String response =new Gson().toJson(jsonResponse);
+        StringEntity httpEntity =new StringEntity(response);
+        httpEntity.setContentType("application/json");
+        httpEntity.setContentEncoding(Charsets.UTF_8.name());
+        httpEntity.setChunked(false);
+        httpResponse = new BasicHttpResponse(new ProtocolVersion("HTTP",1,1),200,"Test");
+
         httpResponse.setStatusCode(200);
         httpResponse.setEntity(httpEntity);
     }
@@ -77,14 +88,11 @@ public class ReportServiceTest {
     @Test
     public void testGenerateReport() throws Exception {
 
-        Mockito.when(gson.fromJson(Mockito.any(String.class),Mockito.any())).thenReturn(jsonResponse);
+        Mockito.when(statusLine.getStatusCode()).thenReturn(200);
         Mockito.when(httpClient.execute(Mockito.any())).thenReturn(httpResponse);
 
-
-        String resp =reportService.getReport(kafkaWatch);
-
-        Assert.assertEquals(resp,HTML);
-
+        Assert.assertTrue(reportService.getReport(kafkaWatch).equals(HTML));
+        Mockito.verify(httpClient,VerificationModeFactory.times(1)).execute(Mockito.any());
 
     }
 }

@@ -1,6 +1,8 @@
 package st.malike.elasticsearch.kafka.watch.service;
 
 import com.google.gson.Gson;
+import org.apache.commons.codec.Charsets;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -53,7 +55,8 @@ public class ReportService {
 
             HttpResponse response = client.execute(post);
             if(response.getStatusLine().getStatusCode() == 200){
-                JSONResponse jsonResponse = gson.fromJson(gson.toJson(response.getEntity().getContent()),JSONResponse.class);
+                String responseString = IOUtils.toString(response.getEntity().getContent(), Charsets.UTF_8.toString());
+                JSONResponse jsonResponse = gson.fromJson(responseString,JSONResponse.class);
                 if(jsonResponse.getStatus()) {
                     return (String) jsonResponse.getData();
                 }else{
