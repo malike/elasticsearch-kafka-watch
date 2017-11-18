@@ -8,9 +8,14 @@ This project, however, is a custom watcher for ElasticSearch which works with Ap
 Supports **2** types of triggers.
 
 #### 1. Time Based Triggers
+
+This trigger uses *crons* to trigger when an event should be pushed to Apache Kafka based on the watch configuration.
 <br>
 
 #### 2. Event Based Triggers
+
+This trigger relies on the IndexListeners and DeleteListeners. Once data is either created or deleted it triggers all watchers
+that meet criteria and pushes the data to Apache Kafka.
 
 <br>
 
