@@ -7,10 +7,7 @@ import org.codelibs.elasticsearch.runner.ElasticsearchClusterRunner;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.node.Node;
 import org.hamcrest.Matchers;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import st.malike.elasticsearch.kafka.watch.util.Enums;
@@ -34,6 +31,11 @@ public class ElasticKafkaWatchPluginTest {
     private static final String CLUSTER_HOST_ADDRESS = "localhost:9201-9210";
     private static Node node;
     private static ElasticsearchClusterRunner runner;
+    String queryString = "{"
+            + "    \"match\": {"
+            + "      \"description\": \"SUBSCRIPTION\""
+            + "    }"
+            + "}";
     private Map param;
 
     @BeforeClass
@@ -70,8 +72,13 @@ public class ElasticKafkaWatchPluginTest {
 
     @Before
     public void setUpTest() {
-
         param = new HashMap();
+    }
+
+    @After
+    public void tearDownTest() throws Exception {
+
+//        runner.deleteIndex(INDEX_NAME);
     }
 
     @Test
@@ -120,12 +127,87 @@ public class ElasticKafkaWatchPluginTest {
     }
 
     @Test
+    public void addNewWatcherForReportWithoutTemplate() {
+
+
+        param.put("eventType", "SUBSCRIPTION_REPORT");
+        param.put("description", "Send reports for subscription daily");
+        param.put("channel", "EMAIL");
+        param.put("cron", "0 0 9 * * MON-FRI");
+        param.put("query", queryString);
+        param.put("generateReport", true);
+        param.put("trigger", Enums.TriggerType.TIME.toString());
+        param.put("indexName", INDEX_NAME);
+
+
+        given()
+                .log().all().contentType("application/json")
+                .body(new Gson().toJson(param))
+                .when()
+                .post("http://localhost:9201/_newkafkawatch")
+                .then()
+                .statusCode(200)
+                .body("status", Matchers.is(false))
+                .body("message", Matchers.is(Enums.JSONResponseMessage.NOT_CONFIGURED_FOR_REPORTS.toString()));
+    }
+
+    @Test
+    public void addNewWatcherForReportWithoutTemplateOrQuery() {
+
+
+        param.put("eventType", "SUBSCRIPTION_REPORT");
+        param.put("description", "Send reports for subscription daily");
+        param.put("channel", "EMAIL");
+        param.put("cron", "0 0 9 * * MON-FRI");
+        param.put("generateReport", true);
+        param.put("trigger", Enums.TriggerType.TIME.toString());
+        param.put("indexName", INDEX_NAME);
+
+
+        given()
+                .log().all().contentType("application/json")
+                .body(new Gson().toJson(param))
+                .when()
+                .post("http://localhost:9201/_newkafkawatch")
+                .then()
+                .statusCode(200)
+                .body("status", Matchers.is(false))
+                .body("message", Matchers.is(Enums.JSONResponseMessage.NOT_CONFIGURED_FOR_REPORTS.toString()));
+    }
+
+    @Test
+    public void addNewWatcherReportKafkaWatch() {
+
+        param.put("eventType", "SUBSCRIPTION_REPORT");
+        param.put("description", "Send reports for subscription daily");
+        param.put("channel", "EMAIL");
+        param.put("cron", "0 0 9 * * MON-FRI");
+        param.put("query", queryString);
+        param.put("generateReport", true);
+        param.put("reportTemplatePath", "/home/malike/dev/report.jrxml");
+        param.put("trigger", Enums.TriggerType.TIME.toString());
+        param.put("indexName", INDEX_NAME);
+
+
+        given()
+                .log().all().contentType("application/json")
+                .body(new Gson().toJson(param))
+                .when()
+                .post("http://localhost:9201/_newkafkawatch")
+                .then()
+                .statusCode(200)
+                .body("status", Matchers.is(true))
+                .body("message", Matchers.is(Enums.JSONResponseMessage.SUCCESS.toString()));
+    }
+
+    @Test
     public void addNewWatcher() {
 
         param.put("eventType", "SUBSCRIPTION");
         param.put("description", "Send welcome notification for every subscription created");
         param.put("channel", "SMS");
         param.put("trigger", "INDEX_OPS");
+        param.put("indexName", INDEX_NAME);
 
 
         given()
@@ -175,6 +257,7 @@ public class ElasticKafkaWatchPluginTest {
         param.put("description", "Send welcome notification for every subscription created");
         param.put("channel", "SMS");
         param.put("trigger", "INDEX_OPS");
+        param.put("indexName",INDEX_NAME);
 
 
         ValidatableResponse validatableResponse = given()
@@ -223,6 +306,7 @@ public class ElasticKafkaWatchPluginTest {
         param.put("description", "Send welcome notification for every subscription created");
         param.put("channel", "SMS");
         param.put("trigger", "INDEX_OPS");
+        param.put("indexName",INDEX_NAME);
 
 
         given()
@@ -275,6 +359,7 @@ public class ElasticKafkaWatchPluginTest {
         param.put("description", "Send welcome notification for every subscription created");
         param.put("channel", "SMS");
         param.put("trigger", "INDEX_OPS");
+        param.put("indexName",INDEX_NAME);
 
 
         given()

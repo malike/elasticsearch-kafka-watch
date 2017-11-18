@@ -25,7 +25,7 @@ public class ReportService {
 
     private static Logger log = Logger.getLogger(ReportService.class);
     HttpClient client = HttpClientBuilder.create().build();
-    Gson gson= new Gson();
+    Gson gson = new Gson();
 
 
     public String getReport(KafkaWatch kafkaWatch) {
@@ -36,8 +36,8 @@ public class ReportService {
                 kafkaWatch.getIndexOpsQuery(), kafkaWatch.getReportFormat(), kafkaWatch.getReportTemplatePath());
     }
 
-    public String executeService(String index,String query,
-                                 String format,String templateFile) {
+    public String executeService(String index, String query,
+                                 String format, String templateFile) {
 
         try {
             HttpPost post = new HttpPost(ElasticKafkaWatchPlugin.getReportEngineEndpoint());
@@ -54,19 +54,19 @@ public class ReportService {
             post.setEntity(new UrlEncodedFormEntity(urlParameters));
 
             HttpResponse response = client.execute(post);
-            if(response.getStatusLine().getStatusCode() == 200){
+            if (response.getStatusLine().getStatusCode() == 200) {
                 String responseString = IOUtils.toString(response.getEntity().getContent(), Charsets.UTF_8.toString());
-                JSONResponse jsonResponse = gson.fromJson(responseString,JSONResponse.class);
-                if(jsonResponse.getStatus()) {
+                JSONResponse jsonResponse = gson.fromJson(responseString, JSONResponse.class);
+                if (jsonResponse.getStatus()) {
                     return (String) jsonResponse.getData();
-                }else{
-                    log.error("Error generating report. Response is "+gson.toJson(response.getEntity().getContent()));
+                } else {
+                    log.error("Error generating report. Response is " + gson.toJson(response.getEntity().getContent()));
                 }
-            }else{
-                log.error("Error generating report. Status Code is "+response.getStatusLine().getStatusCode());
+            } else {
+                log.error("Error generating report. Status Code is " + response.getStatusLine().getStatusCode());
             }
 
-        }catch(Exception e){
+        } catch (Exception e) {
         }
         return null;
     }

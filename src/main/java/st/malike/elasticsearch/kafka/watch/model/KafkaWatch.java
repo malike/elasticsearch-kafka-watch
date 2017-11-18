@@ -170,7 +170,6 @@ public class KafkaWatch implements ToXContent {
     }
 
 
-
     public XContentBuilder toXContent(XContentBuilder xContentBuilder, ToXContent.Params params)
             throws IOException {
         xContentBuilder.field("id", id);

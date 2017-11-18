@@ -10,6 +10,7 @@ public class Enums {
         ERROR,
         MISSING_PARAM,
         INVALID_DATA,
+        NOT_CONFIGURED_FOR_REPORTS,
         DATA_NOT_FOUND
     }
 

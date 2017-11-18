@@ -76,6 +76,9 @@ public class AddWatcherRestAction extends BaseRestHandler {
                 if (map.containsKey("query")) {
                     kafkaWatch.setIndexOpsQuery((String) map.get("query"));
                 }
+                if (map.containsKey("reportTemplatePath")) {
+                    kafkaWatch.setReportTemplatePath((String) map.get("reportTemplatePath"));
+                }
                 if (map.containsKey("miscData")) {
                     kafkaWatch.setMiscData((Map<String, String>) map.get("miscData"));
                 }
@@ -123,12 +126,26 @@ public class AddWatcherRestAction extends BaseRestHandler {
                 };
             }
         }
-        if (kafkaWatch.getTriggerType() == null) {
+        if (kafkaWatch.getTriggerType() == null || kafkaWatch.getIndexName() == null) {
             return channel -> {
                 message.setStatus(false);
                 message.setCount(0L);
-                message.setData("Trigger Type not specified");
+                message.setData("Trigger Type or Index not specified");
                 message.setMessage(Enums.JSONResponseMessage.INVALID_DATA.toString());
+                XContentBuilder builder = channel.newBuilder();
+                builder.startObject();
+                message.toXContent(builder, restRequest);
+                builder.endObject();
+                channel.sendResponse(new BytesRestResponse(RestStatus.OK, builder));
+            };
+        }
+        if (kafkaWatch.isGenerateReport() && kafkaWatch.getQuerySymbol() == null
+                && kafkaWatch.getReportTemplatePath() == null) {
+            return channel -> {
+                message.setStatus(false);
+                message.setCount(0L);
+                message.setData("Watch not configured properly for report");
+                message.setMessage(Enums.JSONResponseMessage.NOT_CONFIGURED_FOR_REPORTS.toString());
                 XContentBuilder builder = channel.newBuilder();
                 builder.startObject();
                 message.toXContent(builder, restRequest);
