@@ -16,12 +16,15 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.internal.verification.VerificationModeFactory;
 import org.mockito.runners.MockitoJUnitRunner;
+import st.malike.elasticsearch.kafka.watch.exception.TemplateFileNotFoundException;
 import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
 import st.malike.elasticsearch.kafka.watch.util.Enums;
 import st.malike.elasticsearch.kafka.watch.util.JSONResponse;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -31,14 +34,15 @@ import java.util.Date;
 @RunWith(MockitoJUnitRunner.class)
 public class ReportServiceTest {
 
-    @Mock
-    StatusLine statusLine;
     HttpResponse httpResponse;
     JSONResponse jsonResponse;
     @InjectMocks
+    @Spy
     private ReportService reportService;
     @Mock
     private HttpClient httpClient;
+    @Mock
+    private StatusLine statusLine;
     private KafkaWatch kafkaWatch;
     private String HTML = "<html><title>Test</title><body>Sample </body></html>";
 
@@ -83,9 +87,21 @@ public class ReportServiceTest {
 
         Mockito.when(statusLine.getStatusCode()).thenReturn(200);
         Mockito.when(httpClient.execute(Mockito.any())).thenReturn(httpResponse);
+        Mockito.doReturn(true).when(reportService).validateReportFile(kafkaWatch);
+
 
         Assert.assertTrue(reportService.getReport(kafkaWatch).equals(HTML));
         Mockito.verify(httpClient, VerificationModeFactory.times(1)).execute(Mockito.any());
 
     }
+
+    @Test(expected = TemplateFileNotFoundException.class)
+    public void testGenerateReportTemplateFileNotFound() throws Exception {
+
+        Mockito.when(httpClient.execute(Mockito.any())).thenReturn(httpResponse);
+
+        reportService.getReport(kafkaWatch);
+    }
+
+
 }

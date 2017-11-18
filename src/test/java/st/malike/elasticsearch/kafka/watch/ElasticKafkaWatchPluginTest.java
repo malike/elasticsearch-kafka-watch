@@ -257,7 +257,7 @@ public class ElasticKafkaWatchPluginTest {
         param.put("description", "Send welcome notification for every subscription created");
         param.put("channel", "SMS");
         param.put("trigger", "INDEX_OPS");
-        param.put("indexName",INDEX_NAME);
+        param.put("indexName", INDEX_NAME);
 
 
         ValidatableResponse validatableResponse = given()
@@ -306,7 +306,7 @@ public class ElasticKafkaWatchPluginTest {
         param.put("description", "Send welcome notification for every subscription created");
         param.put("channel", "SMS");
         param.put("trigger", "INDEX_OPS");
-        param.put("indexName",INDEX_NAME);
+        param.put("indexName", INDEX_NAME);
 
 
         given()
@@ -359,7 +359,7 @@ public class ElasticKafkaWatchPluginTest {
         param.put("description", "Send welcome notification for every subscription created");
         param.put("channel", "SMS");
         param.put("trigger", "INDEX_OPS");
-        param.put("indexName",INDEX_NAME);
+        param.put("indexName", INDEX_NAME);
 
 
         given()

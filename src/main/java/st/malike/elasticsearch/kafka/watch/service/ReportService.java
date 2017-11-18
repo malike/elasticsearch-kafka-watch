@@ -12,9 +12,11 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Logger;
 import st.malike.elasticsearch.kafka.watch.ElasticKafkaWatchPlugin;
+import st.malike.elasticsearch.kafka.watch.exception.TemplateFileNotFoundException;
 import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
 import st.malike.elasticsearch.kafka.watch.util.JSONResponse;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,14 +28,19 @@ public class ReportService {
     private static Logger log = Logger.getLogger(ReportService.class);
     HttpClient client = HttpClientBuilder.create().build();
     Gson gson = new Gson();
+    File file;
 
 
-    public String getReport(KafkaWatch kafkaWatch) {
+    public String getReport(KafkaWatch kafkaWatch) throws TemplateFileNotFoundException {
         if (kafkaWatch == null) {
             return null;
         }
-        return executeService(kafkaWatch.getIndexName(),
-                kafkaWatch.getIndexOpsQuery(), kafkaWatch.getReportFormat(), kafkaWatch.getReportTemplatePath());
+        if(validateReportFile(kafkaWatch)) {
+            return executeService(kafkaWatch.getIndexName(),
+                    kafkaWatch.getIndexOpsQuery(), kafkaWatch.getReportFormat(), kafkaWatch.getReportTemplatePath());
+        }else{
+            throw new TemplateFileNotFoundException("Report template not found");
+        }
     }
 
     public String executeService(String index, String query,
@@ -69,6 +76,14 @@ public class ReportService {
         } catch (Exception e) {
         }
         return null;
+    }
+
+    public boolean validateReportFile(KafkaWatch kafkaWatch) throws TemplateFileNotFoundException{
+        file = new File(kafkaWatch.getReportTemplatePath());
+        if (!(file.exists() && !file.isDirectory())) {
+            throw new TemplateFileNotFoundException("Report template not found");
+        }
+        return true;
     }
 
 }
