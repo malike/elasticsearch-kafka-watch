@@ -28,17 +28,16 @@ public class ReportService {
     private static Logger log = Logger.getLogger(ReportService.class);
     HttpClient client = HttpClientBuilder.create().build();
     Gson gson = new Gson();
-    File file;
 
 
     public String getReport(KafkaWatch kafkaWatch) throws TemplateFileNotFoundException {
         if (kafkaWatch == null) {
             return null;
         }
-        if(validateReportFile(kafkaWatch)) {
+        if (validateReportFile(kafkaWatch)) {
             return executeService(kafkaWatch.getIndexName(),
                     kafkaWatch.getIndexOpsQuery(), kafkaWatch.getReportFormat(), kafkaWatch.getReportTemplatePath());
-        }else{
+        } else {
             throw new TemplateFileNotFoundException("Report template not found");
         }
     }
@@ -52,7 +51,7 @@ public class ReportService {
             post.setHeader("Content-Type", "application/json");
 
             List<NameValuePair> urlParameters = new ArrayList<>();
-            urlParameters.add(new BasicNameValuePair("format", format));
+            urlParameters.add(new BasicNameValuePair("format", (format==null||format.isEmpty())?"PDF":format));
             urlParameters.add(new BasicNameValuePair("index", index));
             urlParameters.add(new BasicNameValuePair("returnAs", "PLAIN"));
             urlParameters.add(new BasicNameValuePair("template", templateFile));
@@ -78,8 +77,8 @@ public class ReportService {
         return null;
     }
 
-    public boolean validateReportFile(KafkaWatch kafkaWatch) throws TemplateFileNotFoundException{
-        file = new File(kafkaWatch.getReportTemplatePath());
+    public boolean validateReportFile(KafkaWatch kafkaWatch) throws TemplateFileNotFoundException {
+        File file = new File(kafkaWatch.getReportTemplatePath());
         if (!(file.exists() && !file.isDirectory())) {
             throw new TemplateFileNotFoundException("Report template not found");
         }

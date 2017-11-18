@@ -24,7 +24,6 @@ import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
 import st.malike.elasticsearch.kafka.watch.util.Enums;
 import st.malike.elasticsearch.kafka.watch.util.JSONResponse;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.Date;
 
