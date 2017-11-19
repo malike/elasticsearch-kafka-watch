@@ -78,7 +78,6 @@ public class ElasticKafkaWatchPluginTest {
     @After
     public void tearDownTest() throws Exception {
 
-//        runner.deleteIndex(INDEX_NAME);
     }
 
     @Test
@@ -379,6 +378,55 @@ public class ElasticKafkaWatchPluginTest {
         String queryString = "{"
                 + "    \"match\": {"
                 + "      \"eventType\": \"SUBSCRIPTION\""
+                + "    }"
+                + "}";
+
+        param.put("param", queryString);
+
+
+        given()
+                .log().all().contentType("application/json")
+                .body(new Gson().toJson(param))
+                .when()
+                .post("http://localhost:9201/_searchkafkawatch")
+                .then()
+                .statusCode(200)
+                .body("status", Matchers.is(true))
+                .body("count", Matchers.is(1))
+                .body("data[0].eventType", Matchers.is("SUBSCRIPTION"))
+                .body("message", Matchers.is(Enums.JSONResponseMessage.SUCCESS.toString()));
+    }
+
+
+    @Test
+    public void searchWatchersByIndex() {
+
+        runner.deleteIndex(ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchIndex());
+
+        param.put("eventType", "SUBSCRIPTION");
+        param.put("description", "Send welcome notification for every subscription created");
+        param.put("channel", "SMS");
+        param.put("trigger", "INDEX_OPS");
+        param.put("indexName", INDEX_NAME);
+
+
+        given()
+                .log().all().contentType("application/json")
+                .body(new Gson().toJson(param))
+                .when()
+                .post("http://localhost:9201/_newkafkawatch")
+                .then()
+                .statusCode(200)
+                .body("status", Matchers.is(true));
+
+        //to refresh data... for fetch
+        runner.flush();
+        runner.refresh();
+
+
+        String queryString = "{"
+                + "    \"match\": {"
+                + "      \"indexName\": \"" + INDEX_NAME + "\""
                 + "    }"
                 + "}";
 

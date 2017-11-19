@@ -36,7 +36,8 @@ public class ReportService {
         }
         if (validateReportFile(kafkaWatch)) {
             return executeService(kafkaWatch.getIndexName(),
-                    kafkaWatch.getIndexOpsQuery(), kafkaWatch.getReportFormat(), kafkaWatch.getReportTemplatePath());
+                    kafkaWatch.getIndexOpsQuery(), kafkaWatch.getReportFormat(),
+                    kafkaWatch.getReportTemplatePath());
         } else {
             throw new TemplateFileNotFoundException("Report template not found");
         }
@@ -51,7 +52,7 @@ public class ReportService {
             post.setHeader("Content-Type", "application/json");
 
             List<NameValuePair> urlParameters = new ArrayList<>();
-            urlParameters.add(new BasicNameValuePair("format", (format==null||format.isEmpty())?"PDF":format));
+            urlParameters.add(new BasicNameValuePair("format", (format == null || format.isEmpty()) ? "PDF" : format));
             urlParameters.add(new BasicNameValuePair("index", index));
             urlParameters.add(new BasicNameValuePair("returnAs", "PLAIN"));
             urlParameters.add(new BasicNameValuePair("template", templateFile));
