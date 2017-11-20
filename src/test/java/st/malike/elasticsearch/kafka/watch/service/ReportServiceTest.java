@@ -59,7 +59,7 @@ public class ReportServiceTest {
         kafkaWatch.setReportTemplatePath("/home/malike/devfiles/report.jrxml");
         kafkaWatch.setGenerateReport(true);
         kafkaWatch.setIndexName("Test");
-        kafkaWatch.setExpectedHit(0);
+        kafkaWatch.setExpectedHit(0L);
         kafkaWatch.setReportFormat("HTML");
         kafkaWatch.setRecipient(Arrays.asList("233201234567", "st.malike@gmail.com"));
 

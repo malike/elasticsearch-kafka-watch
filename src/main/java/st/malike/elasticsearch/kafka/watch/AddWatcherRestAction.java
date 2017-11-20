@@ -65,7 +65,7 @@ public class AddWatcherRestAction extends BaseRestHandler {
                     kafkaWatch.setEventType((String) map.get("eventType"));
                 }
                 if (map.containsKey("expectedHit")) {
-                    kafkaWatch.setExpectedHit((Integer) map.get("expectedHit"));
+                    kafkaWatch.setExpectedHit(Long.parseLong((String) map.get("expectedHit")));
                 }
                 if (map.containsKey("generateReport")) {
                     kafkaWatch.setGenerateReport((Boolean) map.get("generateReport"));

@@ -75,11 +75,6 @@ public class ElasticKafkaWatchPluginTest {
         param = new HashMap();
     }
 
-    @After
-    public void tearDownTest() throws Exception {
-
-    }
-
     @Test
     public void addDummyData() {
         given()
@@ -112,7 +107,7 @@ public class ElasticKafkaWatchPluginTest {
     public void addNewWatcherMissingParam() {
 
         param.put("querySymbol", "");
-        param.put("expectedHit", 5);
+        param.put("expectedHit", "5");
 
         given()
                 .log().all().contentType("application/json")
@@ -299,7 +294,6 @@ public class ElasticKafkaWatchPluginTest {
     @Test
     public void viewWatchers() {
 
-        runner.deleteIndex(ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchIndex());
 
         param.put("eventType", "SUBSCRIPTION");
         param.put("description", "Send welcome notification for every subscription created");
@@ -352,7 +346,6 @@ public class ElasticKafkaWatchPluginTest {
     @Test
     public void searchWatchers() {
 
-        runner.deleteIndex(ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchIndex());
 
         param.put("eventType", "SUBSCRIPTION");
         param.put("description", "Send welcome notification for every subscription created");
@@ -401,7 +394,6 @@ public class ElasticKafkaWatchPluginTest {
     @Test
     public void searchWatchersByIndex() {
 
-        runner.deleteIndex(ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchIndex());
 
         param.put("eventType", "SUBSCRIPTION");
         param.put("description", "Send welcome notification for every subscription created");

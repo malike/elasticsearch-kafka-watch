@@ -24,7 +24,7 @@ public class KafkaWatch implements ToXContent {
     private Enums.TriggerType triggerType;
     private String indexOpsQuery;
     private Enums.QuerySymbol querySymbol;
-    private int expectedHit;
+    private Long expectedHit;
     private String indexName;
     private boolean generateReport;
     private String reportFormat;
@@ -113,11 +113,11 @@ public class KafkaWatch implements ToXContent {
         this.querySymbol = querySymbol;
     }
 
-    public int getExpectedHit() {
+    public Long getExpectedHit() {
         return expectedHit;
     }
 
-    public void setExpectedHit(int expectedHit) {
+    public void setExpectedHit(Long expectedHit) {
         this.expectedHit = expectedHit;
     }
 

@@ -1,5 +1,6 @@
 package st.malike.elasticsearch.kafka.watch.service;
 
+import org.elasticsearch.search.SearchHits;
 import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.Map;
  */
 public class KafkaWatchService {
 
-    public Map executeWatchQuery(String query) {
+    public SearchHits executeWatchQuery(String query) {
         return null;
     }
 
