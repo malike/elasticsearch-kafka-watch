@@ -2,7 +2,6 @@ package st.malike.elasticsearch.kafka.watch.service;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.elasticsearch.index.engine.Engine;
-import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.junit.Assert;
 import org.junit.Before;
@@ -25,6 +24,8 @@ import java.util.Date;
 @RunWith(MockitoJUnitRunner.class)
 public class EventIndexOpsTriggerServiceTest {
 
+    @Mock
+    private SearchHits searchHits;
     @Spy
     @InjectMocks
     private EventIndexOpsTriggerService eventIndexOpsTriggerService;
@@ -36,8 +37,6 @@ public class EventIndexOpsTriggerServiceTest {
     private Engine.Delete delete;
     @Mock
     private Engine.DeleteResult deleteResult;
-    @Mock
-    SearchHits searchHits;
     @Mock
     private KafkaWatchService kafkaWatchService;
     private KafkaWatch kafkaWatch;
@@ -71,52 +70,84 @@ public class EventIndexOpsTriggerServiceTest {
     public void testEvaluateRuleForIndexCreateWithNoWatch() {
 
         Boolean rule = eventIndexOpsTriggerService.evaluateRuleForEvent(INDEX_NAME,
-                index, indexResult,null);
+                index, indexResult, null);
         Assert.assertFalse(rule);
     }
 
     @Test
     public void testEvaluateRuleForIndexCreateWithUnmatchingIndexName() {
 
-        Boolean rule = eventIndexOpsTriggerService.evaluateRuleForEvent(INDEX_NAME+"TEST",
-                index, indexResult,kafkaWatch);
+        Boolean rule = eventIndexOpsTriggerService.evaluateRuleForEvent(INDEX_NAME + "TEST",
+                index, indexResult, kafkaWatch);
         Assert.assertFalse(rule);
     }
 
     @Test
-    public void testEvaluateRuleForIndexCreate() {
+    public void testEvaluateRuleForIndexCreateGreaterOrEqualTo() {
 
         Mockito.when(kafkaWatchService.executeWatchQuery(kafkaWatch.getIndexOpsQuery()))
                 .thenReturn(searchHits);
         Mockito.when(searchHits.getTotalHits()).thenReturn(kafkaWatch.getExpectedHit());
 
         Boolean rule = eventIndexOpsTriggerService.evaluateRuleForEvent(kafkaWatch.getIndexName(),
-                index, indexResult,kafkaWatch);
+                index, indexResult, kafkaWatch);
         Assert.assertTrue(rule);
+    }
+
+    @Test
+    public void testEvaluateRuleForIndexCreateEqualTo() {
+        kafkaWatch.setQuerySymbol(Enums.QuerySymbol.EQUAL_TO);
+
+        Mockito.when(kafkaWatchService.executeWatchQuery(kafkaWatch.getIndexOpsQuery()))
+                .thenReturn(searchHits);
+        Mockito.when(searchHits.getTotalHits()).thenReturn(kafkaWatch.getExpectedHit());
+
+        Boolean rule = eventIndexOpsTriggerService.evaluateRuleForEvent(kafkaWatch.getIndexName(),
+                index, indexResult, kafkaWatch);
+        Assert.assertTrue(rule);
+    }
+
+    @Test
+    public void testEvaluateRuleForIndexCreateLessOrEqualTo() {
+        kafkaWatch.setQuerySymbol(Enums.QuerySymbol.LESS_THAN_OR_EQUAL_TO);
+
+        Mockito.when(kafkaWatchService.executeWatchQuery(kafkaWatch.getIndexOpsQuery()))
+                .thenReturn(searchHits);
+        Mockito.when(searchHits.getTotalHits()).thenReturn(kafkaWatch.getExpectedHit());
+
+        Boolean rule = eventIndexOpsTriggerService.evaluateRuleForEvent(kafkaWatch.getIndexName(),
+                index, indexResult, kafkaWatch);
+        Assert.assertTrue(rule);
+    }
+
+    @Test
+    public void testEvaluateRuleForIndexCreateNotEqualTOHit() {
+        kafkaWatch.setQuerySymbol(Enums.QuerySymbol.EQUAL_TO);
+
+        Mockito.when(kafkaWatchService.executeWatchQuery(kafkaWatch.getIndexOpsQuery()))
+                .thenReturn(searchHits);
+        Mockito.when(searchHits.getTotalHits()).thenReturn(15L);
+
+        Boolean rule = eventIndexOpsTriggerService.evaluateRuleForEvent(kafkaWatch.getIndexName(),
+                index, indexResult, kafkaWatch);
+        Assert.assertFalse(rule);
     }
 
     @Test
     public void testEvaluateRuleForDeleteCreateWithNoWatch() {
 
         Boolean rule = eventIndexOpsTriggerService.evaluateRuleForEvent(INDEX_NAME,
-                delete, deleteResult,null);
+                delete, deleteResult, null);
         Assert.assertFalse(rule);
     }
 
     @Test
     public void testEvaluateRuleForDeleteCreateWithUnmatchingIndexName() {
 
-        Boolean rule = eventIndexOpsTriggerService.evaluateRuleForEvent(INDEX_NAME+"T",
-                delete, deleteResult,kafkaWatch);
+        Boolean rule = eventIndexOpsTriggerService.evaluateRuleForEvent(INDEX_NAME + "T",
+                delete, deleteResult, kafkaWatch);
         Assert.assertFalse(rule);
     }
 
-    @Test
-    public void testEvaluateRuleForIndexDelete() {
-
-        Boolean rule = eventIndexOpsTriggerService.evaluateRuleForEvent(kafkaWatch.getIndexName(),
-                index, indexResult,kafkaWatch);
-        Assert.assertTrue(rule);
-    }
 
 }

@@ -70,6 +70,12 @@ public class ElasticKafkaWatchPluginTest {
         runner.clean();
     }
 
+    @After
+    public void tearDownAfter() throws Exception {
+//        runner.deleteIndex(INDEX_NAME);
+//
+    }
+
     @Before
     public void setUpTest() {
         param = new HashMap();

@@ -20,7 +20,7 @@ public class DocumentWatcherListener implements IndexingOperationListener {
         if ((!shardId.getIndexName().equals(ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchIndex())
                 && (!ElasticKafkaWatchPlugin.getKafkaWatchDisable()))) {
 
-            if (eventIndexOpsTriggerService.evaluateRuleForEvent(shardId.getIndexName(), index, result,null)) {
+            if (eventIndexOpsTriggerService.evaluateRuleForEvent(shardId.getIndexName(), index, result, null)) {
                 log.info("New trigger : Document Created " + index.source().utf8ToString());
             } else {
                 log.info("Trigger did not meet requirements to be pushed to Apache Kafka" + index.source().utf8ToString());
@@ -35,7 +35,7 @@ public class DocumentWatcherListener implements IndexingOperationListener {
                 && (!ElasticKafkaWatchPlugin.getKafkaWatchDisable()))) {
 
 
-            if (eventIndexOpsTriggerService.evaluateRuleForEvent(shardId.getIndexName(), delete, result,null)) {
+            if (eventIndexOpsTriggerService.evaluateRuleForEvent(shardId.getIndexName(), delete, result, null)) {
                 log.info("New trigger : Document deleted " + delete.id());
             } else {
                 log.info("Trigger did not meet requirements to be pushed to Apache Kafka" + delete.id()
