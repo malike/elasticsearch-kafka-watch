@@ -15,13 +15,18 @@ public class EventIndexOpsTriggerService {
     public boolean evaluateRuleForEvent(String indexName, Engine.Index index,
                                         Engine.IndexResult indexResult, KafkaWatch kafkaWatch) {
 
-        return evaluateRule(indexName, kafkaWatch);
+        if (indexResult.isCreated()) {
+            return evaluateRule(indexName, kafkaWatch);
+        }
+        return false;
     }
 
     public boolean evaluateRuleForEvent(String indexName, Engine.Delete delete,
                                         Engine.DeleteResult deleteResult, KafkaWatch kafkaWatch) {
-
-        return evaluateRule(indexName, kafkaWatch);
+        if (deleteResult.isFound()) {
+            return evaluateRule(indexName, kafkaWatch);
+        }
+        return false;
     }
 
 
@@ -36,6 +41,9 @@ public class EventIndexOpsTriggerService {
             return true;
         }
         SearchHits response = kafkaWatchService.executeWatchQuery(kafkaWatch.getIndexOpsQuery());
+        if (response == null) {
+            return false;
+        }
         int compared = Long.valueOf(response.getTotalHits()).compareTo(
                 kafkaWatch.getExpectedHit()
         );
