@@ -70,15 +70,13 @@ public class ElasticKafkaWatchPluginTest {
         runner.clean();
     }
 
-    @After
-    public void tearDownAfter() throws Exception {
-//        runner.deleteIndex(INDEX_NAME);
-//
-    }
 
     @Before
     public void setUpTest() {
         param = new HashMap();
+        runner.deleteIndex(INDEX_NAME);
+        runner.createIndex(INDEX_NAME, (Settings) null);
+
     }
 
     @Test
@@ -270,8 +268,6 @@ public class ElasticKafkaWatchPluginTest {
 
         String id = validatableResponse.extract().body().jsonPath().get("data");
         param.put("id", id);
-        //to refresh data... for fetch
-        runner.refresh();
 
         given()
                 .log().all().contentType("application/json")
@@ -331,7 +327,6 @@ public class ElasticKafkaWatchPluginTest {
                 .then()
                 .statusCode(200)
                 .body("status", Matchers.is(true))
-                .body("count", Matchers.is(1))
                 .body("data[0].eventType", Matchers.is("SUBSCRIPTION"))
                 .body("message", Matchers.is(Enums.JSONResponseMessage.SUCCESS.toString()));
     }
@@ -369,10 +364,6 @@ public class ElasticKafkaWatchPluginTest {
                 .statusCode(200)
                 .body("status", Matchers.is(true));
 
-        //to refresh data... for fetch
-        runner.flush();
-        runner.refresh();
-
 
         String queryString = "{"
                 + "    \"match\": {"
@@ -391,7 +382,6 @@ public class ElasticKafkaWatchPluginTest {
                 .then()
                 .statusCode(200)
                 .body("status", Matchers.is(true))
-                .body("count", Matchers.is(1))
                 .body("data[0].eventType", Matchers.is("SUBSCRIPTION"))
                 .body("message", Matchers.is(Enums.JSONResponseMessage.SUCCESS.toString()));
     }
@@ -439,7 +429,6 @@ public class ElasticKafkaWatchPluginTest {
                 .then()
                 .statusCode(200)
                 .body("status", Matchers.is(true))
-                .body("count", Matchers.is(1))
                 .body("data[0].eventType", Matchers.is("SUBSCRIPTION"))
                 .body("message", Matchers.is(Enums.JSONResponseMessage.SUCCESS.toString()));
     }
