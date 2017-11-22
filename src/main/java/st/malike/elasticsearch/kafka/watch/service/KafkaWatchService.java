@@ -1,5 +1,6 @@
 package st.malike.elasticsearch.kafka.watch.service;
 
+import org.apache.log4j.Logger;
 import org.elasticsearch.search.SearchHits;
 import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
 
@@ -10,11 +11,13 @@ import java.util.List;
  */
 public class KafkaWatchService {
 
+    private static Logger log = Logger.getLogger(KafkaWatchService.class);
+
     public SearchHits executeWatchQuery(String query) {
         return null;
     }
 
-    public List<KafkaWatch> searchWatchByIndex() {
+    public List<KafkaWatch> searchWatchByIndex(String index) {
         return null;
     }
 
