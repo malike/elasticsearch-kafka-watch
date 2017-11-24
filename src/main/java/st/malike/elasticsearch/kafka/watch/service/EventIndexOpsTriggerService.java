@@ -14,7 +14,6 @@ public class EventIndexOpsTriggerService {
 
     public boolean evaluateRuleForEvent(String indexName, Engine.Index index,
                                         Engine.IndexResult indexResult, KafkaWatch kafkaWatch) {
-
         if (indexResult.isCreated()) {
             return evaluateRule(indexName, kafkaWatch);
         }
