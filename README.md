@@ -2,8 +2,8 @@
 
 ## Basic Overview
 
-[ElasticSearch Watcher](https://www.elastic.co/products/x-pack/alerting) is awesome but not free.
-This project, however, is a custom watcher for ElasticSearch which works with Apache Kafka to give close experience as the one from Elastic.
+[Elasticsearch Watcher](https://www.elastic.co/products/x-pack/alerting) is awesome but not free.
+This project, however, is a custom watcher for Elasticsearch which works with Apache Kafka to give close experience as the one from Elastic.
 
 Supports **2** types of triggers.
 
@@ -42,9 +42,9 @@ that meet criteria and pushes the data to Apache Kafka.
 
 ## Supported
 
-ElasticSearch versions supported by this plugin include :
+Elasticsearch versions supported by this plugin include :
 
-| ElasticSearch Version | Comments |
+| Elasticsearch Version | Comments |
 | --------------------- | -------- |
 | [5.4](https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.4.0.zip)               | -   |
 
@@ -52,7 +52,7 @@ ElasticSearch versions supported by this plugin include :
 
 ## Download
 
-| ElasticSearch Version | Comments |
+| Elasticsearch Version | Comments |
 | --------------------- | -------- |
 | [5.4](https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.4.0.zip)               | [-]()  |
 
