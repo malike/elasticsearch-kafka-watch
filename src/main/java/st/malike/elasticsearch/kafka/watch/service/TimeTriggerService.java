@@ -1,13 +1,10 @@
 package st.malike.elasticsearch.kafka.watch.service;
 
 import org.apache.log4j.Logger;
-import org.quartz.*;
-import org.quartz.impl.JobDetailImpl;
-import org.quartz.impl.StdSchedulerFactory;
-import org.quartz.impl.triggers.CronTriggerImpl;
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
 import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
-
-import java.util.TimerTask;
 
 /**
  * @author malike_st
@@ -15,23 +12,23 @@ import java.util.TimerTask;
 public class TimeTriggerService {
     private static Logger log = Logger.getLogger(TimeTriggerService.class);
 
-    public void schedule(KafkaWatch kafkaWatch) throws Exception{
+    public void schedule(KafkaWatch kafkaWatch) throws Exception {
 
     }
 
-    public void addJob(KafkaWatch kafkaWatch){
+    public void addJob(KafkaWatch kafkaWatch) {
 
     }
 
-    public void checkJobState(KafkaWatch kafkaWatch){
+    public void checkJobState(KafkaWatch kafkaWatch) {
 
     }
 
-    public void deleteJob(KafkaWatch kafkaWatch){
+    public void deleteJob(KafkaWatch kafkaWatch) {
 
     }
 
-    public void preloadJobs(){
+    public void preloadJobs() {
 
     }
 

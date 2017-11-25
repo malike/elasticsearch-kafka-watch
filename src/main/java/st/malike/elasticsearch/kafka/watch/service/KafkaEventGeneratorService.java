@@ -8,7 +8,7 @@ import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
  */
 public class KafkaEventGeneratorService {
 
-    public KafkaEvent generate(KafkaWatch kafkaWatch){
+    public KafkaEvent generate(KafkaWatch kafkaWatch) {
         return null;
     }
 }

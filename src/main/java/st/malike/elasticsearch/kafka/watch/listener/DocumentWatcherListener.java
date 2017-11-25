@@ -5,7 +5,6 @@ import org.elasticsearch.index.engine.Engine;
 import org.elasticsearch.index.shard.IndexingOperationListener;
 import org.elasticsearch.index.shard.ShardId;
 import st.malike.elasticsearch.kafka.watch.ElasticKafkaWatchPlugin;
-import st.malike.elasticsearch.kafka.watch.model.KafkaEvent;
 import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
 import st.malike.elasticsearch.kafka.watch.service.EventIndexOpsTriggerService;
 import st.malike.elasticsearch.kafka.watch.service.KafkaEventGeneratorService;
