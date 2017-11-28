@@ -47,6 +47,9 @@ public class TimeTriggerService {
         cronTrigger.setName(kafkaWatch.getId());
         cronTrigger.setGroup(kafkaWatch.getId());
 
+        if(scheduler == null){
+            schedule();
+        }
 
         scheduler.scheduleJob(jobDetail, cronTrigger);
         if (!scheduler.isStarted()) {
