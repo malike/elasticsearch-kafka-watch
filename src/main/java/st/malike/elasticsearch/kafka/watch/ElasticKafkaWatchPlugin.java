@@ -25,9 +25,6 @@ import java.util.function.Supplier;
  */
 public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
 
-    private static Logger log = Logger.getLogger(ElasticKafkaWatchPlugin.class);
-
-    private static TimeTriggerService timeTriggerService = new TimeTriggerService();
     private static final String KAFKA_WATCH_ELASTICSEARCH_INDEX = "kafka.watch.elasticsearch.index";
     private static final String KAFKA_WATCH_ELASTICSEARCH_TYPE = "kafka.watch.elasticsearch.type";
     private static final String KAFKA_WATCH_BINDERS = "kafka.watch.binders";
@@ -35,6 +32,8 @@ public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
     private static final String KAFKA_WATCH_DISABLE = "kafka.watch.disable";
     private static final String REPORT_ENGINE_ENDPOINT = "report.engine.disable";
     private static final String REPORT_ENGINE_DISABLE = "report.engine.disable";
+    private static Logger log = Logger.getLogger(ElasticKafkaWatchPlugin.class);
+    private static TimeTriggerService timeTriggerService = new TimeTriggerService();
 
     public static String getKafkaWatchElasticsearchIndex() {
         return KAFKA_WATCH_ELASTICSEARCH_INDEX;
@@ -70,11 +69,11 @@ public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
                                              IndexScopedSettings indexScopedSettings,
                                              SettingsFilter settingsFilter,
                                              IndexNameExpressionResolver indexNameExpressionResolver,
-                                             Supplier<DiscoveryNodes> nodesInCluster)  {
+                                             Supplier<DiscoveryNodes> nodesInCluster) {
         try {
             timeTriggerService.schedule();
         } catch (Exception e) {
-            log.error("Error starting scheduler. Error "+e.getLocalizedMessage());
+            log.error("Error starting scheduler. Error " + e.getLocalizedMessage());
         }
         return Arrays.asList(new AddWatcherRestAction(settings, restController),
                 new RemoveWatcherRestAction(settings, restController),

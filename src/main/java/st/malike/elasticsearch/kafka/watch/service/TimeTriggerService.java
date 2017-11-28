@@ -47,7 +47,7 @@ public class TimeTriggerService {
         cronTrigger.setName(kafkaWatch.getId());
         cronTrigger.setGroup(kafkaWatch.getId());
 
-        if(scheduler == null){
+        if (scheduler == null) {
             schedule();
         }
 
@@ -60,12 +60,12 @@ public class TimeTriggerService {
     }
 
 
-    public void deleteJob(KafkaWatch kafkaWatch) throws Exception{
-        if(kafkaWatch ==null){
+    public void deleteJob(KafkaWatch kafkaWatch) throws Exception {
+        if (kafkaWatch == null) {
             return;
         }
         JobDetail jobDetail = scheduler.getJobDetail(new JobKey(kafkaWatch.getId()));
-        if(jobDetail != null){
+        if (jobDetail != null) {
             scheduler.deleteJob(new JobKey(kafkaWatch.getId()));
         }
     }

@@ -86,7 +86,7 @@ public class TimeTriggerServiceTest {
                 .thenReturn(new Date());
         JobDetail jobDetail = timeTriggerService.addJob(kafkaWatch);
 
-        Mockito.verify(scheduler,VerificationModeFactory.atLeast(1)).scheduleJob(Mockito.any(),Mockito.any());
+        Mockito.verify(scheduler, VerificationModeFactory.atLeast(1)).scheduleJob(Mockito.any(), Mockito.any());
         Assert.assertNotNull(jobDetail);
     }
 
@@ -97,7 +97,7 @@ public class TimeTriggerServiceTest {
         Mockito.when(scheduler.getJobDetail(new JobKey(kafkaWatch.getId()))).thenReturn(new JobDetailImpl());
         timeTriggerService.deleteJob(kafkaWatch);
 
-        Mockito.verify(scheduler,VerificationModeFactory.atLeast(1)).deleteJob(Mockito.any());
+        Mockito.verify(scheduler, VerificationModeFactory.atLeast(1)).deleteJob(Mockito.any());
 
     }
 
