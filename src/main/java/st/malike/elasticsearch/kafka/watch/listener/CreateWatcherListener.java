@@ -9,6 +9,7 @@ import org.elasticsearch.rest.BytesRestResponse;
 import org.elasticsearch.rest.RestChannel;
 import org.elasticsearch.rest.RestRequest;
 import org.elasticsearch.rest.RestStatus;
+import st.malike.elasticsearch.kafka.watch.service.TimeTriggerService;
 import st.malike.elasticsearch.kafka.watch.util.Enums;
 import st.malike.elasticsearch.kafka.watch.util.JSONResponse;
 
@@ -20,6 +21,7 @@ import java.io.IOException;
 public class CreateWatcherListener implements ActionListener<IndexResponse> {
 
     private static Logger log = Logger.getLogger(CreateWatcherListener.class);
+    private static TimeTriggerService timeTriggerService = new TimeTriggerService();
 
     private final RestChannel restChannel;
     private final RestRequest restRequest;

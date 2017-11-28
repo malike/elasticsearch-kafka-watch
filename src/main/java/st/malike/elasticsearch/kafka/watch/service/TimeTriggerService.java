@@ -16,19 +16,19 @@ public class TimeTriggerService {
     private static Logger log = Logger.getLogger(TimeTriggerService.class);
     private KafkaWatchService kafkaWatchService;
     private Scheduler scheduler;
-    private CronTriggerImpl cronTrigger;
     private JobDetailImpl jobDetail;
-    private SchedulerFactory schedulerFactory;
 
 
     public void schedule() throws Exception {
 
-        schedulerFactory = new StdSchedulerFactory();
+        SchedulerFactory schedulerFactory = new StdSchedulerFactory();
         scheduler = schedulerFactory.getScheduler();
 
+        jobDetail = new JobDetailImpl();
         jobDetail.setGroup("Kafka-Elasticsearch");
         jobDetail.setName("Kafka-Elasticsearch");
         jobDetail.setJobClass(SchedulerJob.class);
+
 
         List<KafkaWatch> watches = kafkaWatchService.findAllWatch();
         if (!watches.isEmpty()) {
@@ -38,14 +38,15 @@ public class TimeTriggerService {
         }
 
         scheduler.start();
-
     }
 
     public JobDetail addJob(KafkaWatch kafkaWatch) throws Exception {
 
+        CronTriggerImpl cronTrigger = new CronTriggerImpl();
         cronTrigger.setCronExpression(kafkaWatch.getCron());
         cronTrigger.setName(kafkaWatch.getId());
         cronTrigger.setGroup(kafkaWatch.getId());
+
 
         scheduler.scheduleJob(jobDetail, cronTrigger);
         if (!scheduler.isStarted()) {
@@ -55,16 +56,20 @@ public class TimeTriggerService {
         return scheduler.getJobDetail(new JobKey(kafkaWatch.getId()));
     }
 
-    public void checkJobState(KafkaWatch kafkaWatch) {
 
-    }
-
-    public void deleteJob(KafkaWatch kafkaWatch) {
-
+    public void deleteJob(KafkaWatch kafkaWatch) throws Exception{
+        if(kafkaWatch ==null){
+            return;
+        }
+        JobDetail jobDetail = scheduler.getJobDetail(new JobKey(kafkaWatch.getId()));
+        if(jobDetail != null){
+            scheduler.deleteJob(new JobKey(kafkaWatch.getId()));
+        }
     }
 
 
     class SchedulerJob implements Job {
+
 
         @Override
         public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {

@@ -13,6 +13,7 @@ import org.mockito.Spy;
 import org.mockito.internal.verification.VerificationModeFactory;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.quartz.JobDetail;
+import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerFactory;
 import org.quartz.impl.JobDetailImpl;
@@ -38,20 +39,14 @@ public class TimeTriggerServiceTest {
     @Mock
     private Scheduler scheduler;
     @Mock
-    private CronTriggerImpl cronTrigger;
-    @Mock
-    private JobDetailImpl jobDetail;
-    @Mock
     private SchedulerFactory schedulerFactory;
-    @Mock
-    private TimeTriggerService.SchedulerJob schedulerJob;
     private KafkaWatch kafkaWatch;
 
 
     @Before
     public void setUp() throws Exception {
         kafkaWatch = new KafkaWatch();
-        kafkaWatch.setCron("2 * * * *   ");
+        kafkaWatch.setCron("0/20 * * * * ?");
         kafkaWatch.setId(RandomStringUtils.randomAlphanumeric(5));
         kafkaWatch.setQuerySymbol(Enums.QuerySymbol.GREATER_THAN_OR_EQUAL_TO);
         kafkaWatch.setSubject("Random Kafka Watch");
@@ -86,23 +81,25 @@ public class TimeTriggerServiceTest {
     @Test
     public void addJob() throws Exception {
 
+        Mockito.when(scheduler.getJobDetail(new JobKey(kafkaWatch.getId()))).thenReturn(new JobDetailImpl());
+        Mockito.when(scheduler.scheduleJob(Mockito.any(JobDetailImpl.class), Mockito.any(CronTriggerImpl.class)))
+                .thenReturn(new Date());
         JobDetail jobDetail = timeTriggerService.addJob(kafkaWatch);
 
+        Mockito.verify(scheduler,VerificationModeFactory.atLeast(1)).scheduleJob(Mockito.any(),Mockito.any());
         Assert.assertNotNull(jobDetail);
     }
 
-    @Test
-    public void checkJobState() throws Exception {
-
-    }
 
     @Test
     public void deleteJob() throws Exception {
 
+        Mockito.when(scheduler.getJobDetail(new JobKey(kafkaWatch.getId()))).thenReturn(new JobDetailImpl());
+        timeTriggerService.deleteJob(kafkaWatch);
+
+        Mockito.verify(scheduler,VerificationModeFactory.atLeast(1)).deleteJob(Mockito.any());
+
     }
 
-    @Test
-    public void preloadJobs() throws Exception {
 
-    }
 }
