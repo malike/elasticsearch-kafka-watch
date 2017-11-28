@@ -62,6 +62,7 @@ public class DeleteWatcherListener implements ActionListener<DeleteResponse> {
             try {
                 XContentBuilder builder = restChannel.newBuilder();
                 builder.startObject();
+                message.setStatus(false);
                 message.setData(e.getLocalizedMessage());
                 message.toXContent(builder, restRequest);
                 builder.endObject();

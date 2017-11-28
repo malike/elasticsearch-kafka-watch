@@ -269,8 +269,9 @@ public class ElasticKafkaWatchPluginTest {
                 .then()
                 .statusCode(200);
 
-        String id = validatableResponse.extract().body().jsonPath().get("data");
-        param.put("id", id);
+        Map response = new Gson().fromJson((String) validatableResponse.extract().body()
+                .jsonPath().get("data"),Map.class);
+        param.put("id", response.get("id"));
 
         given()
                 .log().all().contentType("application/json")

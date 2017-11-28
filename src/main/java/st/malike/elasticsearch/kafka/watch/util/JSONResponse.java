@@ -1,5 +1,6 @@
 package st.malike.elasticsearch.kafka.watch.util;
 
+import com.google.gson.Gson;
 import org.elasticsearch.common.xcontent.ToXContent;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 
