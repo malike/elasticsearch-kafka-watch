@@ -25,5 +25,7 @@ public class KafkaWatchService {
         return null;
     }
 
-
+    public KafkaWatch findById(String key) {
+        return null;
+    }
 }

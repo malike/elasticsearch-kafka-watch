@@ -49,7 +49,7 @@ public class CreateWatcherListener implements ActionListener<IndexResponse> {
                 message.toXContent(builder, restRequest);
                 builder.endObject();
 
-                if(!kafkaWatch.getTriggerType().equals(Enums.TriggerType.INDEX_OPS)){
+                if (!kafkaWatch.getTriggerType().equals(Enums.TriggerType.INDEX_OPS)) {
                     timeTriggerService.addJob(kafkaWatch);
                 }
             } else {

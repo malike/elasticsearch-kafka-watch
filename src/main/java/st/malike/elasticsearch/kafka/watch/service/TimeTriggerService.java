@@ -6,7 +6,6 @@ import org.quartz.impl.JobDetailImpl;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.triggers.CronTriggerImpl;
 import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
-import st.malike.elasticsearch.kafka.watch.util.Enums;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ import java.util.List;
  */
 public class TimeTriggerService {
     private static Logger log = Logger.getLogger(TimeTriggerService.class);
-    private KafkaWatchService kafkaWatchService =new KafkaWatchService();
+    private KafkaWatchService kafkaWatchService = new KafkaWatchService();
     private Scheduler scheduler;
     private JobDetailImpl jobDetail;
 
@@ -32,7 +31,7 @@ public class TimeTriggerService {
 
 
         List<KafkaWatch> watches = kafkaWatchService.findAllWatch();
-        if (watches!=null && !watches.isEmpty()) {
+        if (watches != null && !watches.isEmpty()) {
             for (KafkaWatch watch : watches) {
                 addJob(watch);
             }
@@ -74,10 +73,16 @@ public class TimeTriggerService {
 
     class SchedulerJob implements Job {
 
+        KafkaWatchService kafkaWatchService = new KafkaWatchService();
+        KafkaEventGeneratorService kafkaEventGeneratorService = new KafkaEventGeneratorService();
+        KafkaProducerService kafkaProducerService = new KafkaProducerService();
 
         @Override
         public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
 
+            String key = jobExecutionContext.getJobDetail().getKey().toString();
+            KafkaWatch watch = kafkaWatchService.findById(key);
+            kafkaProducerService.send(kafkaEventGeneratorService.generate(watch));
         }
     }
 }

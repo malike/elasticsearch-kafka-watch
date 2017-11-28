@@ -9,6 +9,7 @@ import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
  */
 public class EventIndexOpsTriggerService {
 
+    private KafkaEventGeneratorService kafkaEventGeneratorService = new KafkaEventGeneratorService();
     private KafkaWatchService kafkaWatchService = new KafkaWatchService();
 
 

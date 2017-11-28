@@ -31,4 +31,9 @@ public class KafkaWatchServiceTest {
     public void searchWatchByIndex() throws Exception {
 
     }
+
+    @Test
+    public void findById(String key) {
+
+    }
 }

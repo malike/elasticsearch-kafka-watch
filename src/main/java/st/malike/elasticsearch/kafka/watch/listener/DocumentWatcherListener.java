@@ -8,6 +8,7 @@ import st.malike.elasticsearch.kafka.watch.ElasticKafkaWatchPlugin;
 import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
 import st.malike.elasticsearch.kafka.watch.service.EventIndexOpsTriggerService;
 import st.malike.elasticsearch.kafka.watch.service.KafkaEventGeneratorService;
+import st.malike.elasticsearch.kafka.watch.service.KafkaProducerService;
 import st.malike.elasticsearch.kafka.watch.service.KafkaWatchService;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class DocumentWatcherListener implements IndexingOperationListener {
     EventIndexOpsTriggerService eventIndexOpsTriggerService = new EventIndexOpsTriggerService();
     KafkaWatchService kafkaWatchService = new KafkaWatchService();
     KafkaEventGeneratorService kafkaEventGeneratorService = new KafkaEventGeneratorService();
+    KafkaProducerService kafkaProducerService = new KafkaProducerService();
 
     @Override
     public void postIndex(ShardId shardId, Engine.Index index, Engine.IndexResult result) {
@@ -31,6 +33,7 @@ public class DocumentWatcherListener implements IndexingOperationListener {
             if (kafkaWatchList != null && kafkaWatchList.isEmpty()) {
                 for (KafkaWatch kafkaWatch : kafkaWatchList) {
                     if (eventIndexOpsTriggerService.evaluateRuleForEvent(shardId.getIndexName(), index, result, kafkaWatch)) {
+                        kafkaProducerService.send(kafkaEventGeneratorService.generate(kafkaWatch));
                         log.info("New trigger : Document Created " + index.source().utf8ToString());
                     } else {
                         log.info("Trigger did not meet requirements to be pushed to Apache Kafka" + index.source().utf8ToString());
@@ -46,12 +49,17 @@ public class DocumentWatcherListener implements IndexingOperationListener {
         if ((!shardId.getIndexName().equals(ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchIndex())
                 && (!ElasticKafkaWatchPlugin.getKafkaWatchDisable()))) {
 
-
-            if (eventIndexOpsTriggerService.evaluateRuleForEvent(shardId.getIndexName(), delete, result, null)) {
-                log.info("New trigger : Document deleted " + delete.id());
-            } else {
-                log.info("Trigger did not meet requirements to be pushed to Apache Kafka" + delete.id()
-                        + " Index Name : " + shardId.getIndexName());
+            List<KafkaWatch> kafkaWatchList = kafkaWatchService.searchWatchByIndex(shardId.getIndexName());
+            if (kafkaWatchList != null && kafkaWatchList.isEmpty()) {
+                for (KafkaWatch kafkaWatch : kafkaWatchList) {
+                    if (eventIndexOpsTriggerService.evaluateRuleForEvent(shardId.getIndexName(), delete, result, kafkaWatch)) {
+                        kafkaProducerService.send(kafkaEventGeneratorService.generate(kafkaWatch));
+                        log.info("New trigger : Document deleted " + delete.id());
+                    } else {
+                        log.info("Trigger did not meet requirements to be pushed to Apache Kafka" + delete.id()
+                                + " Index Name : " + shardId.getIndexName());
+                    }
+                }
             }
         }
     }
