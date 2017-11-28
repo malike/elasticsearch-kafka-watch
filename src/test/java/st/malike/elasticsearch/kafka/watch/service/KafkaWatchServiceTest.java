@@ -33,7 +33,7 @@ public class KafkaWatchServiceTest {
     }
 
     @Test
-    public void findById(String key) {
+    public void findById() {
 
     }
 }
