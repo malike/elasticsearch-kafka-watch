@@ -14,7 +14,7 @@ This trigger uses *crons* to trigger when an event should be pushed to Apache Ka
 
 #### 2. Event Based Triggers
 
-This trigger relies on the IndexListeners and DeleteListeners. Once data is either created or deleted it triggers all watchers
+This trigger relies on the _IndexListeners_ and _DeleteListeners_. Once data is either created or deleted it triggers all watchers
 that meet criteria and pushes the data to Apache Kafka.
 
 <br>
