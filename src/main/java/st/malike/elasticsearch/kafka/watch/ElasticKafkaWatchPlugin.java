@@ -27,10 +27,10 @@ public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
 
     private static final String KAFKA_WATCH_ELASTICSEARCH_INDEX = "kafka.watch.elasticsearch.index";
     private static final String KAFKA_WATCH_ELASTICSEARCH_TYPE = "kafka.watch.elasticsearch.type";
-    private static final String KAFKA_WATCH_BINDERS = "kafka.watch.binders";
+    private static final String KAFKA_WATCH_BOOTSTRAP_SERVERS = "localhost:9092";
     private static final String KAFKA_WATCH_TOPIC = "kafka.watch.topic";
     private static final String KAFKA_WATCH_DISABLE = "kafka.watch.disable";
-    private static final String REPORT_ENGINE_ENDPOINT = "report.engine.disable";
+    private static final String REPORT_ENGINE_ENDPOINT = "report.engine.endpoint";
     private static final String REPORT_ENGINE_DISABLE = "report.engine.disable";
     private static Logger log = Logger.getLogger(ElasticKafkaWatchPlugin.class);
     private static TimeTriggerService timeTriggerService = new TimeTriggerService();
@@ -43,8 +43,8 @@ public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
         return KAFKA_WATCH_ELASTICSEARCH_TYPE;
     }
 
-    public static String getKafkaWatchBinders() {
-        return KAFKA_WATCH_BINDERS;
+    public static String getKafkaWatchBootstrapServers() {
+        return KAFKA_WATCH_BOOTSTRAP_SERVERS;
     }
 
     public static String getKafkaWatchTopic() {
