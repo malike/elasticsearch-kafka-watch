@@ -14,10 +14,10 @@ import java.util.Properties;
 public class KafkaProducerService {
 
     private static Logger log = Logger.getLogger(KafkaProducerService.class);
-    private static Producer<String,KafkaEvent> producer;
+    private static Producer<String, KafkaEvent> producer;
 
 
-    public void startKafka(){
+    public void startKafka() {
         Properties props = new Properties();
         props.put("bootstrap.servers", ElasticKafkaWatchPlugin.getKafkaWatchBootstrapServers());
         props.put("acks", "all");
@@ -26,8 +26,8 @@ public class KafkaProducerService {
         props.put("linger.ms", 1);
         props.put("buffer.memory", 33554432);
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        props.put("value.serializer","org.apache.kafka.common.serialization.StringSerializer");
-         producer = new KafkaProducer<>(props);
+        props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        producer = new KafkaProducer<>(props);
     }
 
     public void send(KafkaEvent event) {

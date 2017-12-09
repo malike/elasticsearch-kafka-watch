@@ -9,6 +9,8 @@ import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
 public class KafkaEventGeneratorService {
 
     public KafkaEvent generate(KafkaWatch kafkaWatch) {
-        return null;
+
+        throw new UnsupportedOperationException();
+
     }
 }
