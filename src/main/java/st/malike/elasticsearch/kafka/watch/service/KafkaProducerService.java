@@ -1,5 +1,6 @@
 package st.malike.elasticsearch.kafka.watch.service;
 
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.log4j.Logger;
 import st.malike.elasticsearch.kafka.watch.ElasticKafkaWatchPlugin;
 import st.malike.elasticsearch.kafka.watch.model.KafkaEvent;
@@ -31,7 +32,9 @@ public class KafkaProducerService {
     }
 
     public void send(KafkaEvent event) {
-        throw new UnsupportedOperationException();
+        producer.send(new ProducerRecord<>(
+                ElasticKafkaWatchPlugin.getKafkaWatchTopic(),
+                event));
     }
 
 }
