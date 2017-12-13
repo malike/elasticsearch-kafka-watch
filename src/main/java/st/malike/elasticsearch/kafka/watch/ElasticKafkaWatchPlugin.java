@@ -55,8 +55,8 @@ public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
         return KAFKA_WATCH_DISABLE.toLowerCase().equals("false");
     }
 
-    public static String getReportEngineDisable() {
-        return REPORT_ENGINE_DISABLE;
+    public static Boolean getReportEngineDisable() {
+        return REPORT_ENGINE_DISABLE.toLowerCase().equals("false");
     }
 
     public static String getReportEngineEndpoint() {

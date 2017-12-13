@@ -12,6 +12,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Logger;
 import st.malike.elasticsearch.kafka.watch.ElasticKafkaWatchPlugin;
+import st.malike.elasticsearch.kafka.watch.exception.ReportGenerationNotSupported;
 import st.malike.elasticsearch.kafka.watch.exception.TemplateFileNotFoundException;
 import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
 import st.malike.elasticsearch.kafka.watch.util.JSONResponse;
@@ -30,7 +31,10 @@ public class ReportService {
     Gson gson = new Gson();
 
 
-    public String getReport(KafkaWatch kafkaWatch) throws TemplateFileNotFoundException {
+    public String getReport(KafkaWatch kafkaWatch) throws TemplateFileNotFoundException, ReportGenerationNotSupported {
+        if(ElasticKafkaWatchPlugin.getReportEngineDisable()){
+            throw new ReportGenerationNotSupported("Report generation not supported");
+        }
         if (kafkaWatch == null) {
             return null;
         }
