@@ -33,7 +33,7 @@ public class KafkaProducerServiceTest {
     @Test
     public void testSend() {
         kafkaProducerService.send(kafkaEvent);
-        Mockito.verify(kafkaProducerService,Mockito.times(1)).send(Mockito.any());
+        Mockito.verify(kafkaProducerService, Mockito.times(1)).send(Mockito.any());
 
     }
 }

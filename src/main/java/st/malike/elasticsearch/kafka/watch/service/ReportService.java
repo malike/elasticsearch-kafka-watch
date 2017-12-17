@@ -32,7 +32,7 @@ public class ReportService {
 
 
     public String getReport(KafkaWatch kafkaWatch) throws TemplateFileNotFoundException, ReportGenerationNotSupported {
-        if(ElasticKafkaWatchPlugin.getReportEngineDisable()){
+        if (ElasticKafkaWatchPlugin.getReportEngineDisable()) {
             throw new ReportGenerationNotSupported("Report generation not supported");
         }
         if (kafkaWatch == null) {

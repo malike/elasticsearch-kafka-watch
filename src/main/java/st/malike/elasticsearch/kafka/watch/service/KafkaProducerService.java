@@ -1,12 +1,12 @@
 package st.malike.elasticsearch.kafka.watch.service;
 
 import com.google.gson.Gson;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.log4j.Logger;
 import st.malike.elasticsearch.kafka.watch.ElasticKafkaWatchPlugin;
 import st.malike.elasticsearch.kafka.watch.model.KafkaEvent;
-import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.KafkaProducer;
 
 import java.util.Properties;
 
