@@ -1,5 +1,6 @@
 package st.malike.elasticsearch.kafka.watch.service;
 
+import com.google.gson.Gson;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.log4j.Logger;
 import st.malike.elasticsearch.kafka.watch.ElasticKafkaWatchPlugin;
@@ -15,7 +16,7 @@ import java.util.Properties;
 public class KafkaProducerService {
 
     private static Logger log = Logger.getLogger(KafkaProducerService.class);
-    private static Producer<String, KafkaEvent> producer;
+    private Producer<String, String> producer;
 
 
     public void startKafka() {
@@ -34,7 +35,7 @@ public class KafkaProducerService {
     public void send(KafkaEvent event) {
         producer.send(new ProducerRecord<>(
                 ElasticKafkaWatchPlugin.getKafkaWatchTopic(),
-                event));
+                new Gson().toJson(event)));
     }
 
 }
