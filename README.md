@@ -51,6 +51,9 @@ For sending SMS or Email alerts based on events written in Apache Kafka  check o
 
 #### 3. Report Scheduling
 
+This plugin also works with 2 other plugins to schedule reports using elasticsearch as datasource.
+
+
 ## Supported
 
 Elasticsearch versions supported by this plugin include :
