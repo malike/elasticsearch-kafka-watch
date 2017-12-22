@@ -31,10 +31,21 @@ that meet criteria and pushes the data to Apache Kafka.
 
 ## Usage
 
-#### 1. Time Based Triggers
+#### 1. Time Based
+ Create a custom watch with its cron. Events would be generated using the cron.
+ This is written into Apache Kafka. Any worker/consumer listening on Apache Kafka would react to the event.
+
+ For sending SMS or Email alerts based on events written in Apache Kafka  check out [go-kafka-alert](https://malike.github.io/go-kafka-alert).
+
 <br>
 
 #### 2. Event Based Triggers
+
+Create a custom watch with and elasticsearch index and query. Once data is written or deleted from the index, it triggers the custom watch to evaluate query
+to check if there'll be a _hit_ greater than *0*.
+Once this is positive an event is written to Apache Kafka for consumers/workers listening to react.
+
+For sending SMS or Email alerts based on events written in Apache Kafka  check out [go-kafka-alert](https://malike.github.io/go-kafka-alert).
 
 <br>
 
