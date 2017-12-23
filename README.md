@@ -53,6 +53,10 @@ For sending SMS or Email alerts based on events written in Apache Kafka  check o
 
 This plugin also works with 2 other plugins to schedule reports using elasticsearch as datasource.
 
+[elasticsearch report engine](https://malike.github.io/elasticsearch-report-engine) and [go-kafka-alert](https://malike.github.io/go-kafka-alert). The former generates PDF,CSV and HTML reports from elasticsearch using queries.
+The later sends the reports as email. PDF and CSV reports can be sent as attachments whiles HTML reports can be sent the email body.
+
+Reports can be sent using event based triggers or time based triggers.
 
 ## Supported
 
