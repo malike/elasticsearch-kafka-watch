@@ -35,7 +35,7 @@ that meet criteria and pushes the data to Apache Kafka.
  Create a custom watch with its cron. Events would be generated using the cron.
  This is written into Apache Kafka. Any worker/consumer listening on Apache Kafka would react to the event.
 
- For sending SMS or Email alerts based on events written in Apache Kafka  check out [go-kafka-alert](https://malike.github.io/go-kafka-alert).
+ For sending SMS or Email alerts based on events written in Apache Kafka  check out [go kafka alert](https://malike.github.io/go-kafka-alert).
 
 <br>
 
@@ -45,7 +45,7 @@ Create a custom watch with and elasticsearch index and query. Once data is writt
 to check if there'll be a _hit_ greater than *0*.
 Once this is positive an event is written to Apache Kafka for consumers/workers listening to react.
 
-For sending SMS or Email alerts based on events written in Apache Kafka  check out [go-kafka-alert](https://malike.github.io/go-kafka-alert).
+For sending SMS or Email alerts based on events written in Apache Kafka  check out [go kafka alert](https://malike.github.io/go-kafka-alert).
 
 <br>
 
@@ -53,7 +53,7 @@ For sending SMS or Email alerts based on events written in Apache Kafka  check o
 
 This plugin also works with 2 other plugins to schedule reports using elasticsearch as datasource.
 
-[elasticsearch report engine](https://malike.github.io/elasticsearch-report-engine) and [go-kafka-alert](https://malike.github.io/go-kafka-alert). The former generates PDF,CSV and HTML reports from elasticsearch using queries.
+[elasticsearch report engine](https://malike.github.io/elasticsearch-report-engine) and [go kafka alert](https://malike.github.io/go-kafka-alert). The former generates PDF,CSV and HTML reports from elasticsearch using queries.
 The later sends the reports as email. PDF and CSV reports can be sent as attachments whiles HTML reports can be sent the email body.
 
 Reports can be sent using event based triggers or time based triggers.
