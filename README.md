@@ -37,6 +37,12 @@ that meet criteria and pushes the data to Apache Kafka.
 
  For sending SMS or Email alerts based on events written in Apache Kafka  check out [go kafka alert](https://malike.github.io/go-kafka-alert).
 
+ Creating a custom watch for a time based cron expects the following parameters:
+
+  a. <br>
+  b. <br>
+  c. <br>
+
 <br>
 
 #### 2. Event Based Triggers
@@ -46,6 +52,13 @@ to check if there'll be a _hit_ greater than *0*.
 Once this is positive an event is written to Apache Kafka for consumers/workers listening to react.
 
 For sending SMS or Email alerts based on events written in Apache Kafka  check out [go kafka alert](https://malike.github.io/go-kafka-alert).
+
+Creating a custom watch for a time based cron expects the following parameters:
+
+  a. <br>
+  b. <br>
+  c. <br>
+
 
 <br>
 
@@ -57,6 +70,14 @@ This plugin also works with 2 other plugins to schedule reports using elasticsea
 The later sends the reports as email. PDF and CSV reports can be sent as attachments whiles HTML reports can be sent the email body.
 
 Reports can be sent using event based triggers or time based triggers.
+
+
+Creating a custom watch for a time based cron expects the following parameters:
+
+  a. <br>
+  b. <br>
+  c. <br>
+
 
 ## Supported
 
