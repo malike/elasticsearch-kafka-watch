@@ -56,7 +56,8 @@ public class ReportService {
             post.setHeader("Content-Type", "application/json");
 
             List<NameValuePair> urlParameters = new ArrayList<>();
-            urlParameters.add(new BasicNameValuePair("format", (format == null || format.isEmpty()) ? "PDF" : format));
+            urlParameters.add(new BasicNameValuePair("format", (format == null
+                    || format.isEmpty()) ? "PDF" : format));
             urlParameters.add(new BasicNameValuePair("index", index));
             urlParameters.add(new BasicNameValuePair("returnAs", "PLAIN"));
             urlParameters.add(new BasicNameValuePair("template", templateFile));
@@ -66,7 +67,8 @@ public class ReportService {
 
             HttpResponse response = client.execute(post);
             if (response.getStatusLine().getStatusCode() == 200) {
-                String responseString = IOUtils.toString(response.getEntity().getContent(), Charsets.UTF_8.toString());
+                String responseString = IOUtils.toString(response.getEntity().getContent(),
+                        Charsets.UTF_8.toString());
                 JSONResponse jsonResponse = gson.fromJson(responseString, JSONResponse.class);
                 if (jsonResponse.getStatus()) {
                     return (String) jsonResponse.getData();
