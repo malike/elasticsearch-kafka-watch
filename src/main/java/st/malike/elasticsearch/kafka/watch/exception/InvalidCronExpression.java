@@ -6,7 +6,7 @@ package st.malike.elasticsearch.kafka.watch.exception;
 public class InvalidCronExpression extends Exception {
 
     public InvalidCronExpression() {
-        supper();
+        super();
     }
 
     public InvalidCronExpression(String message) {

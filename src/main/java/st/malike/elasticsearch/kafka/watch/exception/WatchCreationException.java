@@ -6,7 +6,7 @@ package st.malike.elasticsearch.kafka.watch.exception;
 public class WatchCreationException extends Exception {
 
     public WatchCreationException() {
-        supper();
+        super();
     }
 
     public WatchCreationException(String message) {
