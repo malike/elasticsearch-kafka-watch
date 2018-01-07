@@ -5,12 +5,15 @@ import org.apache.log4j.Logger;
 import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.rest.BytesRestResponse;
 import org.elasticsearch.rest.RestChannel;
 import org.elasticsearch.rest.RestRequest;
 import org.elasticsearch.rest.RestStatus;
+import st.malike.elasticsearch.kafka.watch.config.PluginConfig;
 import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
+import st.malike.elasticsearch.kafka.watch.service.KafkaProducerService;
 import st.malike.elasticsearch.kafka.watch.service.TimeTriggerService;
 import st.malike.elasticsearch.kafka.watch.util.Enums;
 import st.malike.elasticsearch.kafka.watch.util.JSONResponse;
@@ -23,18 +26,19 @@ import java.io.IOException;
 public class CreateWatcherListener implements ActionListener<IndexResponse> {
 
     private static Logger log = Logger.getLogger(CreateWatcherListener.class);
-    private final TimeTriggerService timeTriggerService;
+    private TimeTriggerService timeTriggerService;
 
     private final RestChannel restChannel;
     private final KafkaWatch kafkaWatch;
     private final RestRequest restRequest;
 
     public CreateWatcherListener(RestChannel restChannel, RestRequest restRequest,
-             KafkaWatch kafkaWatch,TimeTriggerService timeTriggerService) {
+                                 KafkaWatch kafkaWatch, PluginConfig pluginConfig, Settings settings) {
         this.restChannel = restChannel;
         this.restRequest = restRequest;
         this.kafkaWatch = kafkaWatch;
-        this.timeTriggerService = timeTriggerService;
+        this.timeTriggerService = new TimeTriggerService(pluginConfig,new KafkaProducerService(pluginConfig,
+                settings));
     }
 
     @Override

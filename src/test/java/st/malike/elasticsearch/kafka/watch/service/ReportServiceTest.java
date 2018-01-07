@@ -17,8 +17,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-import org.mockito.internal.verification.VerificationModeFactory;
 import org.mockito.runners.MockitoJUnitRunner;
+import st.malike.elasticsearch.kafka.watch.config.PluginConfig;
 import st.malike.elasticsearch.kafka.watch.exception.TemplateFileNotFoundException;
 import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
 import st.malike.elasticsearch.kafka.watch.util.Enums;
@@ -42,6 +42,8 @@ public class ReportServiceTest {
     private HttpClient httpClient;
     @Mock
     private StatusLine statusLine;
+    @Mock
+    private PluginConfig pluginConfig;
     private KafkaWatch kafkaWatch;
     private String HTML = "<html><title>Test</title><body>Sample </body></html>";
 
@@ -85,12 +87,12 @@ public class ReportServiceTest {
     public void testGenerateReport() throws Exception {
 
         Mockito.when(statusLine.getStatusCode()).thenReturn(200);
-        Mockito.when(httpClient.execute(Mockito.any())).thenReturn(httpResponse);
+        Mockito.doReturn(HTML).when(reportService).executeService(Mockito.any(),
+        Mockito.any(),Mockito.any(),Mockito.any());
         Mockito.doReturn(true).when(reportService).validateReportFile(kafkaWatch);
 
 
         Assert.assertTrue(reportService.getReport(kafkaWatch).equals(HTML));
-        Mockito.verify(httpClient, VerificationModeFactory.times(1)).execute(Mockito.any());
 
     }
 

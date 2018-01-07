@@ -33,11 +33,10 @@ public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
     private final KafkaProducerService kafkaProducerService;
 
 
-    public ElasticKafkaWatchPlugin(TimeTriggerService timeTriggerService, PluginConfig pluginConfig,
-              KafkaProducerService kafkaProducerService) {
-        this.timeTriggerService = timeTriggerService;
-        this.pluginConfig = pluginConfig;
-        this.kafkaProducerService = kafkaProducerService;
+    public ElasticKafkaWatchPlugin(Settings settings) {
+        this.pluginConfig = new PluginConfig(settings);
+        this.kafkaProducerService = new KafkaProducerService(this.pluginConfig,settings);
+        this.timeTriggerService = new TimeTriggerService(pluginConfig,kafkaProducerService);
     }
 
     @Override

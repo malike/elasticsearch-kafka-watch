@@ -161,6 +161,7 @@ public class AddWatcherRestAction extends BaseRestHandler {
         prepareIndex.setId(kafkaWatch.getId());
         Map m = gson.fromJson(gson.toJson(kafkaWatch), Map.class);
         prepareIndex.setSource(m);
-        return channel -> prepareIndex.execute(new CreateWatcherListener(channel, restRequest, kafkaWatch));
+        return channel -> prepareIndex.execute(new CreateWatcherListener(channel, restRequest,
+                kafkaWatch,pluginConfig,settings));
     }
 }
