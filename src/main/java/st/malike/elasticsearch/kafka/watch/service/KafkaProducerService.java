@@ -22,11 +22,8 @@ public class KafkaProducerService {
     private Producer<String, String> producer;
 
     public KafkaProducerService(PluginConfig pluginConfig,Settings settings) {
-        this.pluginConfig = new PluginConfig(settings);
         this.settings = settings;
-    }
-
-    public void startKafka() {
+        this.pluginConfig = new PluginConfig(settings);
         Properties props = new Properties();
         props.put("bootstrap.servers", pluginConfig.getKafkaWatchBootstrapServers());
         props.put("acks", "all");
@@ -38,6 +35,7 @@ public class KafkaProducerService {
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         producer = new KafkaProducer<>(props);
     }
+
 
     public void send(KafkaEvent event) {
         producer.send(new ProducerRecord<>(
