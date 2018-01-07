@@ -85,8 +85,23 @@ Elasticsearch versions supported by this plugin include :
 
 | Version | - |
 | --------------------- | -------- |
-| [Elassticsearch 5.4](https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.4.0.zip)     | Tested   |
-| [Apache Kafka 0.11.0.0](https://archive.apache.org/dist/kafka/0.11.0.0/kafka_2.11-0.11.0.0.tgz)        | Tested   |
+| [Elassticsearch 5.4](https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.4.0.zip)     | Testing (dev still in progress   |
+| [Apache Kafka 0.11.0.0](https://archive.apache.org/dist/kafka/0.11.0.0/kafka_2.11-0.11.0.0.tgz)        | Testing (dev still in progress   |
+
+
+<p>&nbsp;</p>
+
+## Benchmark Test
+
+Measurement on how fast a trigger is sent to Apache Kafka after indexing and deleting data on Elasticsearch.
+
+System Spec :
+
+
+
+
+
+
 
 
 <p>&nbsp;</p>
