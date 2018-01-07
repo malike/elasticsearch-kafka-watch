@@ -11,6 +11,7 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentHelper;
 import org.elasticsearch.rest.*;
+import st.malike.elasticsearch.kafka.watch.config.PluginConfig;
 import st.malike.elasticsearch.kafka.watch.listener.CreateWatcherListener;
 import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
 import st.malike.elasticsearch.kafka.watch.util.Enums;
@@ -30,10 +31,12 @@ import static org.elasticsearch.rest.RestRequest.Method.POST;
 public class AddWatcherRestAction extends BaseRestHandler {
 
     private static Logger log = Logger.getLogger(AddWatcherRestAction.class);
+    private static PluginConfig pluginConfig ;
 
     @Inject
     public AddWatcherRestAction(Settings settings, RestController controller) {
         super(settings);
+        pluginConfig = new PluginConfig(settings);
         controller.registerHandler(POST, "/_newkafkawatch", this);
     }
 
@@ -41,8 +44,8 @@ public class AddWatcherRestAction extends BaseRestHandler {
     @Override
     protected RestChannelConsumer prepareRequest(RestRequest restRequest, NodeClient client) throws IOException {
         JSONResponse message = new JSONResponse();
-        IndexRequestBuilder prepareIndex = client.prepareIndex(ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchIndex(),
-                ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchType());
+        IndexRequestBuilder prepareIndex = client.prepareIndex(pluginConfig.getKafkaWatchElasticsearchIndex(),
+                pluginConfig.getKafkaWatchElasticsearchType());
         KafkaWatch kafkaWatch = new KafkaWatch();
         if (restRequest.content().length() > 0) {
             Map<String, Object> map = XContentHelper.convertToMap(restRequest.content(), false, null).v2();

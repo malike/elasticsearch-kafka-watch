@@ -5,7 +5,8 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.log4j.Logger;
-import st.malike.elasticsearch.kafka.watch.ElasticKafkaWatchPlugin;
+import org.elasticsearch.common.settings.Settings;
+import st.malike.elasticsearch.kafka.watch.config.PluginConfig;
 import st.malike.elasticsearch.kafka.watch.model.KafkaEvent;
 
 import java.util.Properties;
@@ -16,12 +17,18 @@ import java.util.Properties;
 public class KafkaProducerService {
 
     private static Logger log = Logger.getLogger(KafkaProducerService.class);
+    private final PluginConfig pluginConfig;
+    private final Settings settings;
     private Producer<String, String> producer;
 
+    public KafkaProducerService(PluginConfig pluginConfig,Settings settings) {
+        this.pluginConfig = new PluginConfig(settings);
+        this.settings = settings;
+    }
 
     public void startKafka() {
         Properties props = new Properties();
-        props.put("bootstrap.servers", ElasticKafkaWatchPlugin.getKafkaWatchBootstrapServers());
+        props.put("bootstrap.servers", pluginConfig.getKafkaWatchBootstrapServers());
         props.put("acks", "all");
         props.put("retries", 0);
         props.put("batch.size", 16384);
@@ -34,7 +41,7 @@ public class KafkaProducerService {
 
     public void send(KafkaEvent event) {
         producer.send(new ProducerRecord<>(
-                ElasticKafkaWatchPlugin.getKafkaWatchTopic(),
+                pluginConfig.getKafkaWatchTopic(),
                 new Gson().toJson(event)));
     }
 

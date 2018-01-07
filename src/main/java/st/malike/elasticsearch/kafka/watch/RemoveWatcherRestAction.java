@@ -8,6 +8,7 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentHelper;
 import org.elasticsearch.rest.*;
+import st.malike.elasticsearch.kafka.watch.config.PluginConfig;
 import st.malike.elasticsearch.kafka.watch.listener.DeleteWatcherListener;
 import st.malike.elasticsearch.kafka.watch.util.Enums;
 import st.malike.elasticsearch.kafka.watch.util.JSONResponse;
@@ -23,10 +24,12 @@ import static org.elasticsearch.rest.RestRequest.Method.POST;
 public class RemoveWatcherRestAction extends BaseRestHandler {
 
     private static Logger log = Logger.getLogger(RemoveWatcherRestAction.class);
+    private static PluginConfig pluginConfig ;
 
     @Inject
     public RemoveWatcherRestAction(Settings settings, RestController controller) {
         super(settings);
+        pluginConfig = new PluginConfig(settings);
         controller.registerHandler(POST, "/_removekafkawatch", this);
     }
 
@@ -55,8 +58,8 @@ public class RemoveWatcherRestAction extends BaseRestHandler {
                 };
             }
         }
-        DeleteRequestBuilder prepareDelete = client.prepareDelete(ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchIndex(),
-                ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchType(), id);
+        DeleteRequestBuilder prepareDelete = client.prepareDelete(pluginConfig.getKafkaWatchElasticsearchIndex(),
+                pluginConfig.getKafkaWatchElasticsearchType(), id);
         return channel -> prepareDelete.execute(new DeleteWatcherListener(channel, restRequest));
     }
 }

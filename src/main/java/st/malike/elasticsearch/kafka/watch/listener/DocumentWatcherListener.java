@@ -5,6 +5,7 @@ import org.elasticsearch.index.engine.Engine;
 import org.elasticsearch.index.shard.IndexingOperationListener;
 import org.elasticsearch.index.shard.ShardId;
 import st.malike.elasticsearch.kafka.watch.ElasticKafkaWatchPlugin;
+import st.malike.elasticsearch.kafka.watch.config.PluginConfig;
 import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
 import st.malike.elasticsearch.kafka.watch.service.EventIndexOpsTriggerService;
 import st.malike.elasticsearch.kafka.watch.service.KafkaEventGeneratorService;
@@ -19,15 +20,23 @@ import java.util.List;
 public class DocumentWatcherListener implements IndexingOperationListener {
 
     private static Logger log = Logger.getLogger(DocumentWatcherListener.class);
+    private final PluginConfig pluginConfig;
+    private final KafkaProducerService kafkaProducerService;
+
+    public DocumentWatcherListener(PluginConfig pluginConfig,KafkaProducerService kafkaProducerService) {
+        this.pluginConfig = pluginConfig;
+        this.kafkaProducerService = kafkaProducerService;
+    }
+
     EventIndexOpsTriggerService eventIndexOpsTriggerService = new EventIndexOpsTriggerService();
     KafkaWatchService kafkaWatchService = new KafkaWatchService();
     KafkaEventGeneratorService kafkaEventGeneratorService = new KafkaEventGeneratorService();
-    KafkaProducerService kafkaProducerService = new KafkaProducerService();
+
 
     @Override
     public void postIndex(ShardId shardId, Engine.Index index, Engine.IndexResult result) {
-        if ((!shardId.getIndexName().equals(ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchIndex())
-                && (!ElasticKafkaWatchPlugin.getKafkaWatchDisable()))) {
+        if ((!shardId.getIndexName().equals(pluginConfig.getKafkaWatchElasticsearchIndex())
+                && (!pluginConfig.getKafkaWatchDisable()))) {
 
             List<KafkaWatch> kafkaWatchList = kafkaWatchService.searchWatchByIndex(shardId.getIndexName());
             if (kafkaWatchList != null && kafkaWatchList.isEmpty()) {
@@ -36,7 +45,7 @@ public class DocumentWatcherListener implements IndexingOperationListener {
                         kafkaProducerService.send(kafkaEventGeneratorService.generate(kafkaWatch));
                         log.info("New trigger : Document Created " + index.source().utf8ToString());
                     } else {
-                        log.info("Trigger did not meet requirements to be pushed to Apache Kafka" + index.source().utf8ToString());
+                        log.info("Trigger did not meet requirements to be pushed to Apache Kafka " + index.source().utf8ToString());
                     }
                 }
             }
@@ -46,8 +55,8 @@ public class DocumentWatcherListener implements IndexingOperationListener {
 
     @Override
     public void postDelete(ShardId shardId, Engine.Delete delete, Engine.DeleteResult result) {
-        if ((!shardId.getIndexName().equals(ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchIndex())
-                && (!ElasticKafkaWatchPlugin.getKafkaWatchDisable()))) {
+        if ((!shardId.getIndexName().equals(pluginConfig.getKafkaWatchElasticsearchIndex())
+                && (!pluginConfig.getKafkaWatchDisable()))) {
 
             List<KafkaWatch> kafkaWatchList = kafkaWatchService.searchWatchByIndex(shardId.getIndexName());
             if (kafkaWatchList != null && kafkaWatchList.isEmpty()) {

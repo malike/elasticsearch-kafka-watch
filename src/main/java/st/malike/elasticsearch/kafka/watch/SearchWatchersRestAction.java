@@ -10,6 +10,7 @@ import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentHelper;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.rest.*;
+import st.malike.elasticsearch.kafka.watch.config.PluginConfig;
 import st.malike.elasticsearch.kafka.watch.listener.ViewWatchersListener;
 import st.malike.elasticsearch.kafka.watch.util.Enums;
 import st.malike.elasticsearch.kafka.watch.util.JSONResponse;
@@ -25,10 +26,12 @@ import static org.elasticsearch.rest.RestRequest.Method.POST;
 public class SearchWatchersRestAction extends BaseRestHandler {
 
     private static Logger log = Logger.getLogger(SearchWatchersRestAction.class);
+    private static PluginConfig pluginConfig ;
 
     @Inject
     public SearchWatchersRestAction(Settings settings, RestController controller) {
         super(settings);
+        pluginConfig = new PluginConfig(settings);
         controller.registerHandler(POST, "/_searchkafkawatch", this);
     }
 
@@ -66,11 +69,11 @@ public class SearchWatchersRestAction extends BaseRestHandler {
             };
         }
         SearchRequestBuilder prepareSearch = client.prepareSearch(
-                ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchIndex());
+                pluginConfig.getKafkaWatchElasticsearchIndex());
         prepareSearch.setFrom(from);
         prepareSearch.setSize(size);
         prepareSearch.setSearchType(SearchType.DFS_QUERY_THEN_FETCH);
-        prepareSearch.setTypes(ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchType());
+        prepareSearch.setTypes(pluginConfig.getKafkaWatchElasticsearchType());
         prepareSearch.setQuery(QueryBuilders.wrapperQuery(query));
         return channel -> prepareSearch.execute(new ViewWatchersListener(channel, restRequest));
     }

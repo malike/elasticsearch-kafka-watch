@@ -5,6 +5,7 @@ import org.quartz.*;
 import org.quartz.impl.JobDetailImpl;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.triggers.CronTriggerImpl;
+import st.malike.elasticsearch.kafka.watch.config.PluginConfig;
 import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
 
 import java.util.List;
@@ -14,10 +15,17 @@ import java.util.List;
  */
 public class TimeTriggerService {
     private static Logger log = Logger.getLogger(TimeTriggerService.class);
+    private final PluginConfig pluginConfig;
+    private final KafkaProducerService kafkaProducerService;
+
     private KafkaWatchService kafkaWatchService = new KafkaWatchService();
     private Scheduler scheduler;
     private JobDetailImpl jobDetail;
 
+    public TimeTriggerService(PluginConfig pluginConfig, KafkaProducerService kafkaProducerService) {
+        this.pluginConfig = pluginConfig;
+        this.kafkaProducerService = kafkaProducerService;
+    }
 
     public void schedule() throws Exception {
 
@@ -75,7 +83,6 @@ public class TimeTriggerService {
 
         KafkaWatchService kafkaWatchService = new KafkaWatchService();
         KafkaEventGeneratorService kafkaEventGeneratorService = new KafkaEventGeneratorService();
-        KafkaProducerService kafkaProducerService = new KafkaProducerService();
 
         @Override
         public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {

@@ -9,7 +9,6 @@ import org.elasticsearch.rest.BytesRestResponse;
 import org.elasticsearch.rest.RestChannel;
 import org.elasticsearch.rest.RestRequest;
 import org.elasticsearch.rest.RestStatus;
-import st.malike.elasticsearch.kafka.watch.service.TimeTriggerService;
 import st.malike.elasticsearch.kafka.watch.util.Enums;
 import st.malike.elasticsearch.kafka.watch.util.JSONResponse;
 
@@ -22,7 +21,6 @@ import java.io.IOException;
 public class DeleteWatcherListener implements ActionListener<DeleteResponse> {
 
     private static Logger log = Logger.getLogger(DeleteWatcherListener.class);
-    private static TimeTriggerService timeTriggerService = new TimeTriggerService();
 
     private final RestChannel restChannel;
     private final RestRequest restRequest;

@@ -11,7 +11,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Logger;
-import st.malike.elasticsearch.kafka.watch.ElasticKafkaWatchPlugin;
+import st.malike.elasticsearch.kafka.watch.config.PluginConfig;
 import st.malike.elasticsearch.kafka.watch.exception.ReportGenerationNotSupported;
 import st.malike.elasticsearch.kafka.watch.exception.TemplateFileNotFoundException;
 import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
@@ -27,12 +27,20 @@ import java.util.List;
 public class ReportService {
 
     private static Logger log = Logger.getLogger(ReportService.class);
+    private final PluginConfig pluginConfig;
+    private final KafkaProducerService kafkaProducerService;
+
+    public ReportService(PluginConfig pluginConfig, KafkaProducerService kafkaProducerService) {
+        this.pluginConfig = pluginConfig;
+        this.kafkaProducerService = kafkaProducerService;
+    }
+
     HttpClient client = HttpClientBuilder.create().build();
     Gson gson = new Gson();
 
 
     public String getReport(KafkaWatch kafkaWatch) throws TemplateFileNotFoundException, ReportGenerationNotSupported {
-        if (ElasticKafkaWatchPlugin.getReportEngineDisable()) {
+        if (pluginConfig.getReportEngineDisable()) {
             throw new ReportGenerationNotSupported("Report generation not supported");
         }
         if (kafkaWatch == null) {
@@ -51,7 +59,7 @@ public class ReportService {
                                  String format, String templateFile) {
 
         try {
-            HttpPost post = new HttpPost(ElasticKafkaWatchPlugin.getReportEngineEndpoint());
+            HttpPost post = new HttpPost(pluginConfig.getReportEngineEndpoint());
 
             post.setHeader("Content-Type", "application/json");
 

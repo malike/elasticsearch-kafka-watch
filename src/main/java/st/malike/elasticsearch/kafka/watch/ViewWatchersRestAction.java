@@ -11,6 +11,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.rest.BaseRestHandler;
 import org.elasticsearch.rest.RestController;
 import org.elasticsearch.rest.RestRequest;
+import st.malike.elasticsearch.kafka.watch.config.PluginConfig;
 import st.malike.elasticsearch.kafka.watch.listener.ViewWatchersListener;
 
 import java.io.IOException;
@@ -24,10 +25,12 @@ import static org.elasticsearch.rest.RestRequest.Method.POST;
 public class ViewWatchersRestAction extends BaseRestHandler {
 
     private static Logger log = Logger.getLogger(ViewWatchersRestAction.class);
+    private static PluginConfig pluginConfig;
 
     @Inject
     public ViewWatchersRestAction(Settings settings, RestController controller) {
         super(settings);
+        pluginConfig = new PluginConfig(settings);
         controller.registerHandler(POST, "/_listkafkawatch", this);
     }
 
@@ -49,11 +52,11 @@ public class ViewWatchersRestAction extends BaseRestHandler {
             }
         }
         SearchRequestBuilder prepareSearch = client.prepareSearch(
-                ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchIndex());
+                pluginConfig.getKafkaWatchElasticsearchIndex());
         prepareSearch.setFrom(from);
         prepareSearch.setSize(size);
         prepareSearch.setSearchType(SearchType.DFS_QUERY_THEN_FETCH);
-        prepareSearch.setTypes(ElasticKafkaWatchPlugin.getKafkaWatchElasticsearchType());
+        prepareSearch.setTypes(pluginConfig.getKafkaWatchElasticsearchType());
         prepareSearch.setQuery(QueryBuilders.matchAllQuery());
         return channel -> prepareSearch.execute(new ViewWatchersListener(channel, restRequest));
     }
