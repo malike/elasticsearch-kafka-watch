@@ -105,9 +105,9 @@ System Spec :
 | --------------------- | --------  | --------  | -------- |
 | 1 | Indexed| Yes | - |
 | 200 | 100 Indexed,100 Deleted| Yes | - |
-| 2000 | 1000 Indexed,1000 Deleted| Yes | - |
-| 2000 | 1000 Indexed,1000 Deleted| No | - |
-| 2,000, 000 | 1,000, 000 Indexed, 1,000, 000 Deleted| Yes | - |
+| 2,000 | 1,000 Indexed, 1,000 Deleted| Yes | - |
+| 2,000 | 1,000 Indexed, 1,000 Deleted| No | - |
+| 2,000,000 | 1,000,000 Indexed, 1,000,000 Deleted| Yes | - |
 
 
 
@@ -121,6 +121,13 @@ System Spec :
 | Elasticsearch Version | Comments |
 | --------------------- | -------- |
 | [5.4](https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.4.0.zip)               | [-]()  |
+
+<p>&nbsp;</p>
+
+## Installation
+
+Add the following configuration to your _elasticsearch.yml_ file
+
 
 <p>&nbsp;</p>
 
