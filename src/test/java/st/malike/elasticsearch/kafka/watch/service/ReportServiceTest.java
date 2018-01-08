@@ -88,7 +88,7 @@ public class ReportServiceTest {
 
         Mockito.when(statusLine.getStatusCode()).thenReturn(200);
         Mockito.doReturn(HTML).when(reportService).executeService(Mockito.any(),
-        Mockito.any(),Mockito.any(),Mockito.any());
+                Mockito.any(), Mockito.any(), Mockito.any());
         Mockito.doReturn(true).when(reportService).validateReportFile(kafkaWatch);
 
 

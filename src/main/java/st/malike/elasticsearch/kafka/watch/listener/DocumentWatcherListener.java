@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.elasticsearch.index.engine.Engine;
 import org.elasticsearch.index.shard.IndexingOperationListener;
 import org.elasticsearch.index.shard.ShardId;
-import st.malike.elasticsearch.kafka.watch.ElasticKafkaWatchPlugin;
 import st.malike.elasticsearch.kafka.watch.config.PluginConfig;
 import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
 import st.malike.elasticsearch.kafka.watch.service.EventIndexOpsTriggerService;
@@ -22,16 +21,13 @@ public class DocumentWatcherListener implements IndexingOperationListener {
     private static Logger log = Logger.getLogger(DocumentWatcherListener.class);
     private final PluginConfig pluginConfig;
     private final KafkaProducerService kafkaProducerService;
-
-    public DocumentWatcherListener(PluginConfig pluginConfig,KafkaProducerService kafkaProducerService) {
-        this.pluginConfig = pluginConfig;
-        this.kafkaProducerService = kafkaProducerService;
-    }
-
     EventIndexOpsTriggerService eventIndexOpsTriggerService = new EventIndexOpsTriggerService();
     KafkaWatchService kafkaWatchService = new KafkaWatchService();
     KafkaEventGeneratorService kafkaEventGeneratorService = new KafkaEventGeneratorService();
-
+    public DocumentWatcherListener(PluginConfig pluginConfig, KafkaProducerService kafkaProducerService) {
+        this.pluginConfig = pluginConfig;
+        this.kafkaProducerService = kafkaProducerService;
+    }
 
     @Override
     public void postIndex(ShardId shardId, Engine.Index index, Engine.IndexResult result) {

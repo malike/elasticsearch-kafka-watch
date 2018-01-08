@@ -22,9 +22,11 @@ public class TimeTriggerService {
     private Scheduler scheduler;
     private JobDetailImpl jobDetail;
 
-    public TimeTriggerService(PluginConfig pluginConfig, KafkaProducerService kafkaProducerService) {
+    public TimeTriggerService(PluginConfig pluginConfig, KafkaProducerService kafkaProducerService)
+            throws Exception {
         this.pluginConfig = pluginConfig;
         this.kafkaProducerService = kafkaProducerService;
+        schedule();
     }
 
     public void schedule() throws Exception {

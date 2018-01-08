@@ -29,15 +29,12 @@ public class ReportService {
     private static Logger log = Logger.getLogger(ReportService.class);
     private final PluginConfig pluginConfig;
     private final KafkaProducerService kafkaProducerService;
-
+    HttpClient client = HttpClientBuilder.create().build();
+    Gson gson = new Gson();
     public ReportService(PluginConfig pluginConfig, KafkaProducerService kafkaProducerService) {
         this.pluginConfig = pluginConfig;
         this.kafkaProducerService = kafkaProducerService;
     }
-
-    HttpClient client = HttpClientBuilder.create().build();
-    Gson gson = new Gson();
-
 
     public String getReport(KafkaWatch kafkaWatch) throws TemplateFileNotFoundException, ReportGenerationNotSupported {
         if (pluginConfig.getReportEngineDisable()) {

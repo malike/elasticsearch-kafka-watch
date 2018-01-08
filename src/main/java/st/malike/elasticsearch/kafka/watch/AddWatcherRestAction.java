@@ -31,7 +31,7 @@ import static org.elasticsearch.rest.RestRequest.Method.POST;
 public class AddWatcherRestAction extends BaseRestHandler {
 
     private static Logger log = Logger.getLogger(AddWatcherRestAction.class);
-    private static PluginConfig pluginConfig ;
+    private static PluginConfig pluginConfig;
 
     @Inject
     public AddWatcherRestAction(Settings settings, RestController controller) {
@@ -162,6 +162,6 @@ public class AddWatcherRestAction extends BaseRestHandler {
         Map m = gson.fromJson(gson.toJson(kafkaWatch), Map.class);
         prepareIndex.setSource(m);
         return channel -> prepareIndex.execute(new CreateWatcherListener(channel, restRequest,
-                kafkaWatch,pluginConfig,settings));
+                kafkaWatch, pluginConfig, settings));
     }
 }

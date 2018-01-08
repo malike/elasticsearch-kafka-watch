@@ -11,13 +11,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.quartz.JobDetail;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerFactory;
 import org.quartz.impl.JobDetailImpl;
 import org.quartz.impl.triggers.CronTriggerImpl;
-import st.malike.elasticsearch.kafka.watch.config.PluginConfig;
 import st.malike.elasticsearch.kafka.watch.model.KafkaWatch;
 import st.malike.elasticsearch.kafka.watch.util.Enums;
 
@@ -40,8 +38,6 @@ public class TimeTriggerServiceTest {
     private Scheduler scheduler;
     @Mock
     private SchedulerFactory schedulerFactory;
-    @Mock
-    private PluginConfig pluginConfig;
     private KafkaWatch kafkaWatch;
 
 
@@ -85,10 +81,11 @@ public class TimeTriggerServiceTest {
         Mockito.when(scheduler.getJobDetail(new JobKey(kafkaWatch.getId()))).thenReturn(new JobDetailImpl());
         Mockito.when(scheduler.scheduleJob(Mockito.any(JobDetailImpl.class), Mockito.any(CronTriggerImpl.class)))
                 .thenReturn(new Date());
-        Mockito.doReturn(Mockito.any(JobDetail.class)).when(timeTriggerService).addJob(Mockito.any());
-        JobDetail jobDetail = timeTriggerService.addJob(kafkaWatch);
 
-        Assert.assertNotNull(jobDetail);
+        Mockito.when(scheduler.getJobDetail(new JobKey(kafkaWatch.getId()))).thenReturn(new JobDetailImpl());
+
+        timeTriggerService.addJob(kafkaWatch);
+
     }
 
 
@@ -96,6 +93,7 @@ public class TimeTriggerServiceTest {
     public void deleteJob() throws Exception {
 
         Mockito.when(scheduler.getJobDetail(new JobKey(kafkaWatch.getId()))).thenReturn(new JobDetailImpl());
+
         timeTriggerService.deleteJob(kafkaWatch);
 
     }

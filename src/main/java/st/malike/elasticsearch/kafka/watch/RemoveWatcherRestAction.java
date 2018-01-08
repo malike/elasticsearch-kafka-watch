@@ -24,7 +24,7 @@ import static org.elasticsearch.rest.RestRequest.Method.POST;
 public class RemoveWatcherRestAction extends BaseRestHandler {
 
     private static Logger log = Logger.getLogger(RemoveWatcherRestAction.class);
-    private static PluginConfig pluginConfig ;
+    private static PluginConfig pluginConfig;
 
     @Inject
     public RemoveWatcherRestAction(Settings settings, RestController controller) {

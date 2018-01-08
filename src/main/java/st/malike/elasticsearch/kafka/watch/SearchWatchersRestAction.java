@@ -26,7 +26,7 @@ import static org.elasticsearch.rest.RestRequest.Method.POST;
 public class SearchWatchersRestAction extends BaseRestHandler {
 
     private static Logger log = Logger.getLogger(SearchWatchersRestAction.class);
-    private static PluginConfig pluginConfig ;
+    private static PluginConfig pluginConfig;
 
     @Inject
     public SearchWatchersRestAction(Settings settings, RestController controller) {

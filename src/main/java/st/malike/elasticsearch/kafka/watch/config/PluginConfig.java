@@ -16,17 +16,8 @@ public class PluginConfig {
     private static final String REPORT_ENGINE_DISABLE = "report.engine.disable";
 
 
-    public PluginConfig(Settings settings)  {
-//            try {
-//                logger.info("configFile : " + configFile);
-//                prop.load(new FileInputStream(configFile));
-//
-//                logger.info("Properties : " + prop);
-//            } catch (Exception e) {
-//                logger.error("Error reading/loading configFile: " + e.getMessage(), e);
-//                throw e;
-//            }
-            }
+    public PluginConfig(Settings settings) {
+    }
 
     public static String getKafkaWatchElasticsearchIndex() {
         return KAFKA_WATCH_ELASTICSEARCH_INDEX;
@@ -55,7 +46,6 @@ public class PluginConfig {
     public static String getReportEngineEndpoint() {
         return REPORT_ENGINE_ENDPOINT;
     }
-
 
 
 }

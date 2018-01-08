@@ -21,7 +21,7 @@ public class KafkaProducerService {
     private final Settings settings;
     private Producer<String, String> producer;
 
-    public KafkaProducerService(PluginConfig pluginConfig,Settings settings) {
+    public KafkaProducerService(PluginConfig pluginConfig, Settings settings) {
         this.settings = settings;
         this.pluginConfig = new PluginConfig(settings);
         Properties props = new Properties();

@@ -26,18 +26,17 @@ import java.io.IOException;
 public class CreateWatcherListener implements ActionListener<IndexResponse> {
 
     private static Logger log = Logger.getLogger(CreateWatcherListener.class);
-    private TimeTriggerService timeTriggerService;
-
     private final RestChannel restChannel;
     private final KafkaWatch kafkaWatch;
     private final RestRequest restRequest;
+    private TimeTriggerService timeTriggerService;
 
     public CreateWatcherListener(RestChannel restChannel, RestRequest restRequest,
-                                 KafkaWatch kafkaWatch, PluginConfig pluginConfig, Settings settings) {
+                                 KafkaWatch kafkaWatch, PluginConfig pluginConfig, Settings settings) throws Exception {
         this.restChannel = restChannel;
         this.restRequest = restRequest;
         this.kafkaWatch = kafkaWatch;
-        this.timeTriggerService = new TimeTriggerService(pluginConfig,new KafkaProducerService(pluginConfig,
+        this.timeTriggerService = new TimeTriggerService(pluginConfig, new KafkaProducerService(pluginConfig,
                 settings));
     }
 

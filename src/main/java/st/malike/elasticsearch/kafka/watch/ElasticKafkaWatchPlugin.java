@@ -33,10 +33,10 @@ public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
     private final KafkaProducerService kafkaProducerService;
 
 
-    public ElasticKafkaWatchPlugin(Settings settings) {
+    public ElasticKafkaWatchPlugin(Settings settings) throws Exception {
         this.pluginConfig = new PluginConfig(settings);
-        this.kafkaProducerService = new KafkaProducerService(this.pluginConfig,settings);
-        this.timeTriggerService = new TimeTriggerService(pluginConfig,kafkaProducerService);
+        this.kafkaProducerService = new KafkaProducerService(this.pluginConfig, settings);
+        this.timeTriggerService = new TimeTriggerService(pluginConfig, kafkaProducerService);
     }
 
     @Override
@@ -60,6 +60,6 @@ public class ElasticKafkaWatchPlugin extends Plugin implements ActionPlugin {
     @Override
     public void onIndexModule(IndexModule indexModule) {
         indexModule.addIndexEventListener(new IndexWatcherListener());
-        indexModule.addIndexOperationListener(new DocumentWatcherListener(pluginConfig,kafkaProducerService));
+        indexModule.addIndexOperationListener(new DocumentWatcherListener(pluginConfig, kafkaProducerService));
     }
 }

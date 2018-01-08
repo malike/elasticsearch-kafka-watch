@@ -4,7 +4,8 @@ package st.malike.elasticsearch.kafka.watch.exception;
  * @autor malike_st
  */
 public class TemplateFileNotFoundException extends Exception {
-    public TemplateFileNotFoundException() {super();
+    public TemplateFileNotFoundException() {
+        super();
     }
 
     public TemplateFileNotFoundException(String message) {
