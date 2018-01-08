@@ -97,14 +97,17 @@ Measurement on how fast a trigger is sent to Apache Kafka after indexing and del
 
 System Spec :
 
+<p>&nbsp;</p>
 
-| Events | Type | Trigger Active | Result |
+
+
+| Number of Events | Type | Trigger Active | Result |
 | --------------------- | --------  | --------  | -------- |
 | 1 | Indexed| Yes | - |
 | 200 | 100 Indexed,100 Deleted| Yes | - |
 | 2000 | 1000 Indexed,1000 Deleted| Yes | - |
 | 2000 | 1000 Indexed,1000 Deleted| No | - |
-| 1000, 000 | 1000 Indexed,1000 Deleted| No | - |
+| 2,000, 000 | 1,000, 000 Indexed, 1,000, 000 Deleted| Yes | - |
 
 
 
