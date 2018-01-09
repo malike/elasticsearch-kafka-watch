@@ -28,6 +28,12 @@ import static com.jayway.restassured.RestAssured.given;
 public class ElasticKafkaWatchPluginTest {
 
 
+    private  static final String KAFKA_WATCH_ELASTICSEARCH_TYPE = "kafka.watch.elasticsearch.type";
+    private  static final String KAFKA_WATCH_BOOTSTRAP_SERVERS = "localhost:9092";
+    private  static final String KAFKA_WATCH_TOPIC = "kafka.watch.topic";
+    private  static final String KAFKA_WATCH_DISABLE = "kafka.watch.disable";
+    private  static final String REPORT_ENGINE_ENDPOINT = "report.engine.endpoint";
+    private  static final String REPORT_ENGINE_DISABLE = "report.engine.disable";
     private static final String INDEX_NAME = "kafka_watch";
     private static final String INDEX_TYPE = "kafka_topic";
     private static final String CLUSTER_NAME = "DUMMY_CLUSTER";
@@ -41,6 +47,8 @@ public class ElasticKafkaWatchPluginTest {
             + "}";
     private Map param;
 
+
+
     @BeforeClass
     public static void setUp() throws IOException {
 
@@ -51,6 +59,12 @@ public class ElasticKafkaWatchPluginTest {
             public void build(final int number, final Settings.Builder settingsBuilder) {
                 settingsBuilder.put("http.cors.allow-origin", "*");
                 settingsBuilder.put("http.cors.enabled", true);
+                settingsBuilder.put(KAFKA_WATCH_ELASTICSEARCH_TYPE, "test");
+                settingsBuilder.put(KAFKA_WATCH_BOOTSTRAP_SERVERS, "localhost:9092");
+                settingsBuilder.put(KAFKA_WATCH_TOPIC, "kafka-watch");
+                settingsBuilder.put(KAFKA_WATCH_DISABLE, false);
+                settingsBuilder.put(REPORT_ENGINE_ENDPOINT, "http://localhost-dummy");
+                settingsBuilder.put(REPORT_ENGINE_DISABLE, false);
                 settingsBuilder.putArray("discovery.zen.ping.unicast.hosts", CLUSTER_HOST_ADDRESS);
             }
         }).build(ElasticsearchClusterRunner.newConfigs().clusterName(CLUSTER_NAME).numOfNode(1)

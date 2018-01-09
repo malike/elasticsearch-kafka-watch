@@ -104,10 +104,10 @@ System Spec :
 | Number of Events | Type | Trigger Active | Result |
 | --------------------- | --------  | --------  | -------- |
 | 1 | Indexed| Yes | - |
-| 200 | 100 Indexed,100 Deleted| Yes | - |
-| 2,000 | 1,000 Indexed, 1,000 Deleted| Yes | - |
-| 2,000 | 1,000 Indexed, 1,000 Deleted| No | - |
-| 2,000,000 | 1,000,000 Indexed, 1,000,000 Deleted| Yes | - |
+| 200 | 100 _Indexed_,100 _Deleted_| Yes | - |
+| 2,000 | 1,000 _Indexed_, 1,000 _Deleted_| Yes | - |
+| 2,000 | 1,000 _Indexed_, 1,000 _Deleted_| No | - |
+| 2,000,000 | 1,000,000 _Indexed_, 1,000,000 _Deleted_| Yes | - |
 
 
 
