@@ -55,6 +55,7 @@ public class ElasticKafkaWatchPluginTest {
         runner = new ElasticsearchClusterRunner();
 
         runner.onBuild(new ElasticsearchClusterRunner.Builder() {
+
             @Override
             public void build(final int number, final Settings.Builder settingsBuilder) {
                 settingsBuilder.put("http.cors.allow-origin", "*");
@@ -73,7 +74,7 @@ public class ElasticKafkaWatchPluginTest {
         runner.ensureYellow();
 
         // create an index
-        runner.createIndex(INDEX_NAME, (Settings) null);
+        runner.createIndex(INDEX_NAME, runner.clusterService().getSettings());
 
 
         runner.refresh();
@@ -92,7 +93,7 @@ public class ElasticKafkaWatchPluginTest {
     public void setUpTest() {
         param = new HashMap();
         runner.deleteIndex(INDEX_NAME);
-        runner.createIndex(INDEX_NAME, (Settings) null);
+        runner.createIndex(INDEX_NAME, runner.clusterService().getSettings());
 
     }
 
