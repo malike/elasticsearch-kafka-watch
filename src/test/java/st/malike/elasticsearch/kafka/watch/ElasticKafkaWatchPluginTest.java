@@ -60,12 +60,6 @@ public class ElasticKafkaWatchPluginTest {
             public void build(final int number, final Settings.Builder settingsBuilder) {
                 settingsBuilder.put("http.cors.allow-origin", "*");
                 settingsBuilder.put("http.cors.enabled", true);
-                settingsBuilder.put(KAFKA_WATCH_ELASTICSEARCH_TYPE, "test");
-                settingsBuilder.put(KAFKA_WATCH_BOOTSTRAP_SERVERS, "localhost:9092");
-                settingsBuilder.put(KAFKA_WATCH_TOPIC, "kafka-watch");
-                settingsBuilder.put(KAFKA_WATCH_DISABLE, false);
-                settingsBuilder.put(REPORT_ENGINE_ENDPOINT, "http://localhost-dummy");
-                settingsBuilder.put(REPORT_ENGINE_DISABLE, false);
                 settingsBuilder.putArray("discovery.zen.ping.unicast.hosts", CLUSTER_HOST_ADDRESS);
             }
         }).build(ElasticsearchClusterRunner.newConfigs().clusterName(CLUSTER_NAME).numOfNode(1)
