@@ -68,7 +68,7 @@ public class ElasticKafkaWatchPluginTest {
         runner.ensureYellow();
 
         // create an index
-        runner.createIndex(INDEX_NAME, runner.clusterService().getSettings());
+        runner.createIndex(INDEX_NAME, (Settings) null);
 
 
         runner.refresh();
@@ -87,7 +87,7 @@ public class ElasticKafkaWatchPluginTest {
     public void setUpTest() {
         param = new HashMap();
         runner.deleteIndex(INDEX_NAME);
-        runner.createIndex(INDEX_NAME, runner.clusterService().getSettings());
+        runner.createIndex(INDEX_NAME, (Settings) null);
 
     }
 

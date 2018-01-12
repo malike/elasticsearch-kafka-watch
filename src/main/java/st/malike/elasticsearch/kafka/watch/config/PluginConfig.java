@@ -22,32 +22,32 @@ public class PluginConfig {
 
     public  String getKafkaWatchElasticsearchIndex() {
         
-        return this.settings.get(KAFKA_WATCH_ELASTICSEARCH_INDEX);
+        return KAFKA_WATCH_ELASTICSEARCH_INDEX;
     }
 
     public  String getKafkaWatchElasticsearchType() {
-        return this.settings.get(KAFKA_WATCH_ELASTICSEARCH_TYPE);
+        return KAFKA_WATCH_ELASTICSEARCH_TYPE;
     }
 
     public  String getKafkaWatchBootstrapServers() {
-        return this.settings.get(KAFKA_WATCH_BOOTSTRAP_SERVERS);
+        return KAFKA_WATCH_BOOTSTRAP_SERVERS;
     }
 
     public  String getKafkaWatchTopic() {
-        return this.settings.get(KAFKA_WATCH_TOPIC);
+        return KAFKA_WATCH_TOPIC;
     }
 
     public  Boolean getKafkaWatchDisable() {
-        return this.settings.get(KAFKA_WATCH_DISABLE).toLowerCase().equals("false");
+        return KAFKA_WATCH_DISABLE.toLowerCase().equals("false");
     }
 
     public  Boolean getReportEngineDisable() {
-        return this.settings.get(REPORT_ENGINE_DISABLE).toLowerCase().equals("false");
+        return REPORT_ENGINE_DISABLE.toLowerCase().equals("false");
     }
 
     public  String getReportEngineEndpoint() {
 
-        return this.settings.get(REPORT_ENGINE_ENDPOINT);
+        return REPORT_ENGINE_ENDPOINT;
     }
 
 
