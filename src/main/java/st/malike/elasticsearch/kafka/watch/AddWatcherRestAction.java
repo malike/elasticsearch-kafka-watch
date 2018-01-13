@@ -36,7 +36,7 @@ public class AddWatcherRestAction extends BaseRestHandler {
     @Inject
     public AddWatcherRestAction(Settings settings, RestController controller) {
         super(settings);
-        pluginConfig = new PluginConfig(settings);
+        pluginConfig = new PluginConfig();
         controller.registerHandler(POST, "/_newkafkawatch", this);
     }
 

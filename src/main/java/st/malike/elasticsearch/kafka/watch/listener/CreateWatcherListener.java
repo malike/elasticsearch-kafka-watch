@@ -36,8 +36,7 @@ public class CreateWatcherListener implements ActionListener<IndexResponse> {
         this.restChannel = restChannel;
         this.restRequest = restRequest;
         this.kafkaWatch = kafkaWatch;
-        this.timeTriggerService = new TimeTriggerService(pluginConfig, new KafkaProducerService(pluginConfig,
-                settings));
+        this.timeTriggerService = new TimeTriggerService(pluginConfig, new KafkaProducerService(pluginConfig));
     }
 
     @Override

@@ -29,7 +29,7 @@ public class RemoveWatcherRestAction extends BaseRestHandler {
     @Inject
     public RemoveWatcherRestAction(Settings settings, RestController controller) {
         super(settings);
-        pluginConfig = new PluginConfig(settings);
+        pluginConfig = new PluginConfig();
         controller.registerHandler(POST, "/_removekafkawatch", this);
     }
 

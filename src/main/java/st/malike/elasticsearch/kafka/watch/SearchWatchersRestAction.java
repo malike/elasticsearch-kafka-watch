@@ -31,7 +31,7 @@ public class SearchWatchersRestAction extends BaseRestHandler {
     @Inject
     public SearchWatchersRestAction(Settings settings, RestController controller) {
         super(settings);
-        pluginConfig = new PluginConfig(settings);
+        pluginConfig = new PluginConfig();
         controller.registerHandler(POST, "/_searchkafkawatch", this);
     }
 

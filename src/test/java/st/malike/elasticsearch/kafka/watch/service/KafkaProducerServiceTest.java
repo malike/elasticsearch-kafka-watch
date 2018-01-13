@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-import st.malike.elasticsearch.kafka.watch.config.PluginConfig;
 import st.malike.elasticsearch.kafka.watch.model.KafkaEvent;
 
 /**
@@ -25,8 +24,6 @@ public class KafkaProducerServiceTest {
     private Producer<String, String> producer;
     @Mock
     private KafkaEvent kafkaEvent;
-    @Mock
-    private PluginConfig pluginConfig;
 
 
     @Before
@@ -36,6 +33,7 @@ public class KafkaProducerServiceTest {
 
     @Test
     public void testSend() {
+
         kafkaProducerService.send(kafkaEvent);
         Mockito.verify(kafkaProducerService, Mockito.times(1)).send(Mockito.any());
 

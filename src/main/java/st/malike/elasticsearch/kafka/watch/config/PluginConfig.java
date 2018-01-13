@@ -1,7 +1,5 @@
 package st.malike.elasticsearch.kafka.watch.config;
 
-import org.elasticsearch.common.settings.Settings;
-
 /**
  * @autor malike_st
  */
@@ -14,10 +12,9 @@ public class PluginConfig {
     private  final String KAFKA_WATCH_DISABLE = "kafka.watch.disable";
     private  final String REPORT_ENGINE_ENDPOINT = "report.engine.endpoint";
     private  final String REPORT_ENGINE_DISABLE = "report.engine.disable";
-    private final Settings settings;
 
-    public PluginConfig(Settings settings) {
-        this.settings = settings;
+    public PluginConfig() {
+
     }
 
     public  String getKafkaWatchElasticsearchIndex() {

@@ -30,7 +30,7 @@ public class ViewWatchersRestAction extends BaseRestHandler {
     @Inject
     public ViewWatchersRestAction(Settings settings, RestController controller) {
         super(settings);
-        pluginConfig = new PluginConfig(settings);
+        pluginConfig = new PluginConfig();
         controller.registerHandler(POST, "/_listkafkawatch", this);
     }
 

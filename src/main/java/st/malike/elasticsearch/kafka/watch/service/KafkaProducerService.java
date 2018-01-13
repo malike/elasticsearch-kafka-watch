@@ -5,7 +5,6 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.log4j.Logger;
-import org.elasticsearch.common.settings.Settings;
 import st.malike.elasticsearch.kafka.watch.config.PluginConfig;
 import st.malike.elasticsearch.kafka.watch.model.KafkaEvent;
 
@@ -17,13 +16,10 @@ import java.util.Properties;
 public class KafkaProducerService {
 
     private static Logger log = Logger.getLogger(KafkaProducerService.class);
-    private final PluginConfig pluginConfig;
-    private final Settings settings;
-    private Producer<String, String> producer;
+    private static PluginConfig pluginConfig=new PluginConfig();
+    private final Producer<String, String> producer;
 
-    public KafkaProducerService(PluginConfig pluginConfig, Settings settings) {
-        this.settings = settings;
-        this.pluginConfig = new PluginConfig(settings);
+    public KafkaProducerService(PluginConfig pluginConfigs) {
         Properties props = new Properties();
         props.put("bootstrap.servers", pluginConfig.getKafkaWatchBootstrapServers());
         props.put("acks", "all");
