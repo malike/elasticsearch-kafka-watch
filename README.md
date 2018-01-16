@@ -37,9 +37,6 @@ folder to be picked by plugin.
 <br>
 
 
-
-
-
 ## Setup And Requirements
 
 
