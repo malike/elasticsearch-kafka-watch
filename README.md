@@ -29,6 +29,7 @@ also how it would use [elasticsearch report engine](https://malike.github.io/ela
 reports. The file _elastcsearch-kafka-watch.yml_ should be place in _/path/to/elasticsearch/config_
 folder to be picked by plugin.
 
+[Sample Config File](https://github.com/malike/elasticsearch-kafka-watch/blob/master/SampleConfig/elastcsearch-kafka-watch.yml)
 
 #### Installation
 ``sudo bin/elasticsearch-plugin install [plugin_name] ``
