@@ -21,9 +21,22 @@ that meet criteria and pushes the data to Apache Kafka.
 
 ## Install
 
+
+#### Configuration
+
+Plugin requires a configuration file to know how to connect to Apache Kafka and
+also how it would use [elasticsearch report engine](https://malike.github.io/elasticsearch-report-engine) to generate
+reports. The file _elastcsearch-kafka-watch.yml_ should be place in _/path/to/elasticsearch/config_
+folder to be picked by plugin.
+
+
+#### Installation
 ``sudo bin/elasticsearch-plugin install [plugin_name] ``
 
 <br>
+
+
+
 
 
 ## Setup And Requirements

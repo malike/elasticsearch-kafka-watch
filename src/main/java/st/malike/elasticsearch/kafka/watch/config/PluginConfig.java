@@ -13,9 +13,6 @@ public class PluginConfig {
     private  final String REPORT_ENGINE_ENDPOINT = "report.engine.endpoint";
     private  final String REPORT_ENGINE_DISABLE = "report.engine.disable";
 
-    public PluginConfig() {
-
-    }
 
     public  String getKafkaWatchElasticsearchIndex() {
         
