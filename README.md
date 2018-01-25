@@ -137,7 +137,7 @@ System Spec :
 
 ## Installation
 
-Add the following configuration to your _elasticsearch.yml_ file
+Add the following configuration to your _elasticsearch-kafka-watch.yml_ file located in _/path/to/elasticsearch/config_
 
 
 <p>&nbsp;</p>
