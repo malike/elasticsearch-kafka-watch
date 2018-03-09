@@ -2,8 +2,7 @@
 
 ## Basic Overview
 
-[Elasticsearch Watcher](https://www.elastic.co/products/x-pack/alerting) is awesome but not free.
-This project, however, is a custom watcher for Elasticsearch which works with Apache Kafka to give close experience as the one from Elastic.
+This project is a custom watcher for Elasticsearch which works with Apache Kafka by reacting to event in Elasticserch and writing them to Apache Kafka.
 
 Supports **2** types of triggers.
 
